@@ -15,7 +15,7 @@ Pro Chat is a real-time messaging web application that allows users to chat with
 
 To run Pro Chat locally, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/your-username/pro-chat.git`
+1. Clone the repository: `git clone https://github.com/Tuanpluss02/Pro-Chat.git`
 2. Install dependencies: `npm install`
 3. Create a `.env` file and set the following environment variables:
    - `MONGODB_URI`: the URI for your MongoDB database

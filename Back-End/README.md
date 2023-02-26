@@ -1,7 +1,4 @@
 # Chat Room App
-
-This API was built to support the [chat_app_FE](https://github.com/jmoussa/chat_app_FE).
-In the `/api` folder you will find the routes for rooms and users.
 This being a FastAPI app, you will also be able to get quick documenatation on the routes and request types after getting it up and running.
 
 This app uses:
@@ -36,9 +33,3 @@ This app uses a couple of 3rd party resources for all of it's functionality.
 - AWS S3 is used for storing the user's profile images and fetching them.
 - Twilio is used for the group video chat capability.
 - MongoDB is used to persist all data to the database.
-
-## Screenshots
-![Login](./screenshots/1.jpg)
-![Lobby](./screenshots/2.jpg)
-![Favorites](./screenshots/3.jpg)
-![Chat Room](./screenshots/4.jpg)

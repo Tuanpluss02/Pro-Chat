@@ -1,0 +1,29 @@
+# Gitignore for FastAPI project with venv
+
+# Python virtual environment
+venv/
+
+# Compiled Python files
+__pycache__/
+*.pyc
+
+# Python egg metadata, regenerated from source files by setuptools
+*.egg-info/
+
+# Log files
+*.log
+
+# Local configuration files
+.env
+.env.*
+
+# IDE and editor specific files
+.vscode/
+.idea/
+*.code-workspace
+
+# Dependency directories
+lib/
+bin/
+include/
+share/

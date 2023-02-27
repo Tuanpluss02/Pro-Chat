@@ -27,3 +27,6 @@ lib/
 bin/
 include/
 share/
+
+.space
+.vercel

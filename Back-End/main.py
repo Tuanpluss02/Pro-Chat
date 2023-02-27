@@ -39,21 +39,21 @@ async def startup_event():
     await connect_to_mongo()
     client = await get_nosql_db()
     db = client[MONGODB_DB_NAME]
-    try:
-        db.create_collection("users")
-    except pymongo.errors.CollectionInvalid as e:
-        logging.warning(e)
-        pass
-    try:
-        db.create_collection("rooms")
-    except pymongo.errors.CollectionInvalid as e:
-        logging.warning(e)
-        pass
-    try:
-        db.create_collection("messages")
-    except pymongo.errors.CollectionInvalid as e:
-        logging.warning(e)
-        pass
+    # try:
+    #     db.create_collection("users")
+    # except pymongo.errors.CollectionInvalid as e:
+    #     logging.warning(e)
+    #     pass
+    # try:
+    #     db.create_collection("rooms")
+    # except pymongo.errors.CollectionInvalid as e:
+    #     logging.warning(e)
+    #     pass
+    # try:
+    #     db.create_collection("messages")
+    # except pymongo.errors.CollectionInvalid as e:
+    #     logging.warning(e)
+    #     pass
     try:
         user_collection = db.users
         room_collection = db.rooms

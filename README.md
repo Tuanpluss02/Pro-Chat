@@ -1,7 +1,7 @@
 # Pro Chat
 
 Pro Chat is a real-time messaging web application that allows users to chat with each other instantly. It is built using Node.js, Express, Socket.io, and React.
-
+Check our langding page [https://software-engineering-landing.web.app/](https://software-engineering-landing.web.app/)
 ## Features
 
 - Real-time messaging

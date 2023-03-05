@@ -1,3 +1,6 @@
+import pymongo
+import logging
+import json
 from fastapi import FastAPI, WebSocket
 
 # from websockets.exceptions import ConnectionClosedError
@@ -10,9 +13,7 @@ from api import router as api_router
 from notifier import ConnectionManager
 from starlette.websockets import WebSocketState
 
-import pymongo
-import logging
-import json
+
 
 app = FastAPI()
 logger = logging.getLogger(__name__)

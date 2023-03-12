@@ -18,7 +18,8 @@ async def get_nosql_db() -> MongoClient:
 
 
 async def connect_to_mongo():
-    db.client = MongoClient(str(MONGODB_URL), maxPoolSize=MAX_CONNECTIONS_COUNT, minPoolSize=MIN_CONNECTIONS_COUNT,)
+    db.client = MongoClient(str(
+        MONGODB_URL), maxPoolSize=MAX_CONNECTIONS_COUNT, minPoolSize=MIN_CONNECTIONS_COUNT,)
     logging.info("connected to mongodb")
 
 

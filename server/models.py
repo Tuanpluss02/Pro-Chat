@@ -17,6 +17,9 @@ class UserInDB(User):
     _id: ObjectId
     date_created: datetime = Field(default_factory=datetime.utcnow)
 
+    def __getitem__(self, key):
+        return getattr(self, key)
+
 
 class Message(BaseModel):
     user: UserInDB
@@ -39,6 +42,9 @@ class Room(BaseModel):
 class RoomInDB(Room):
     _id: ObjectId
     date_created: datetime = Field(default_factory=datetime.utcnow)
+
+    def __getitem__(self, key):
+        return getattr(self, key)
 
 
 class Token(BaseModel):

@@ -105,18 +105,20 @@ async def get_user(name) -> UserInDB:
 
 async def add_favlist_to_user(username, favorite_list):
     client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    users_collection = db.users
+    db_user = client[MONGODB_DB_NAME]
+    users_collection = db_user.users
     user_obj = await get_user(username)
     if "favorites" in user_obj:
-        missing_favorites = [item for item in favorite_list if item not in user_obj["favorites"]]
+        missing_favorites = [
+            item for item in favorite_list if item not in user_obj["favorites"]]
     else:
         missing_favorites = favorite_list
 
     if len(missing_favorites) > 0:
         for fav in missing_favorites:
             users_collection.update_one(
-                {"username": user_obj["username"]}, {"$push": {"favorites": {"$each": missing_favorites}}}
+                {"username": user_obj["username"]}, {
+                    "$push": {"favorites": {"$each": missing_favorites}}}
             )
         user = await get_user(username)
         return user
@@ -126,23 +128,25 @@ async def add_favlist_to_user(username, favorite_list):
 
 async def remove_favorite_from_user(username, favorite):
     client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    users_collection = db.users
+    db_user = client[MONGODB_DB_NAME]
+    users_collection = db_user.users
     user_obj = await get_user(username)
-    users_collection.update_one({"username": user_obj["username"]}, {"$pull": {"favorites": favorite}})
+    users_collection.update_one({"username": user_obj["username"]}, {
+                                "$pull": {"favorites": favorite}})
     user = await get_user(username)
     return user
 
 
 async def update_profile_picture(user, file, filename):
     client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    users_collection = db.users
+    db_user = client[MONGODB_DB_NAME]
+    users_collection = db_user.users
     s3_result = upload_file_to_s3(file, filename)
     if s3_result:
         logger.info("S3 upload success")
         s3_key = s3_result
-        users_collection.update_one({"username": user.username}, {"$set": {"profile_pic_img_src": s3_key}})
+        users_collection.update_one({"username": user.username}, {
+                                    "$set": {"profile_pic_img_src": s3_key}})
     else:
         logger.info("S3 upload failure")
     new_user = await get_user(user.username)

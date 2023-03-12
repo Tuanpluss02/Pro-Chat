@@ -1,18 +1,17 @@
-import pymongo
 import logging
 import json
+import pymongo
 from fastapi import FastAPI, WebSocket
 
 # from websockets.exceptions import ConnectionClosedError
 # from starlette.websockets import WebSocketDisconnect
-from controllers import get_room, remove_user_from_room, add_user_to_room, upload_message_to_room
+from controllers.rooms import get_room, remove_user_from_room, add_user_to_room, upload_message_to_room
 from mongodb import close_mongo_connection, connect_to_mongo, get_nosql_db
 from starlette.middleware.cors import CORSMiddleware
 from config import MONGODB_DB_NAME
 from api import router as api_router
 from notifier import ConnectionManager
 from starlette.websockets import WebSocketState
-
 
 
 app = FastAPI()
@@ -38,6 +37,9 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
+    """
+     Create mongo collections and indexes on startup. This is run as a coroutine so we don't have to worry about threading
+    """
     await connect_to_mongo()
     client = await get_nosql_db()
     db = client[MONGODB_DB_NAME]
@@ -60,7 +62,8 @@ async def startup_event():
         user_collection = db.users
         room_collection = db.rooms
         user_collection.create_index("username", name="username", unique=True)
-        room_collection.create_index("room_name", name="room_name", unique=True)
+        room_collection.create_index(
+            "room_name", name="room_name", unique=True)
     except pymongo.errors.CollectionInvalid as e:
         logging.warning(e)
         pass
@@ -104,7 +107,8 @@ async def websocket_endpoint(websocket: WebSocket, room_name, user_name):
                     logger.info(f"DATA RECIEVED: {data}")
                     await manager.broadcast(f"{data}")
             else:
-                logger.warning(f"Websocket state: {websocket.application_state}, reconnecting...")
+                logger.warning(
+                    f"Websocket state: {websocket.application_state}, reconnecting...")
                 await manager.connect(websocket, room_name)
     except Exception as ex:
         template = "An exception of type {0} occurred. Arguments:\n{1!r}"

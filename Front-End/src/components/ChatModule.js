@@ -26,7 +26,7 @@ var client = null;
 function checkWebSocket(username, roomname) {
   if (client === null || client.readyState === WebSocket.CLOSED) {
     client = new WebSocket(
-      "ws://localhost:8000/ws/" + roomname + "/" + username
+      "wss://api-prochat.onrender.com/ws/" + roomname + "/" + username
     );
   }
   return client;
@@ -58,7 +58,7 @@ class ChatModule extends React.Component {
   checkWebSocketConnection() {
     if (client === null || client.readyState === WebSocket.CLOSED) {
       client = new WebSocket(
-        "ws://localhost:8000/ws/" +
+        "wss://api-prochat.onrender.com/ws/" +
           this.state.room_name +
           "/" +
           this.state.currentUser

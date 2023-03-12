@@ -33,3 +33,96 @@ Contributions are always welcome! Please read the contributing guidelines before
 ## License
 
 This project is licensed under the MIT License.
+
+```
+Pro-Chat
+├─ .vscode
+│  └─ settings.json
+├─ Back-End
+│  ├─ README.md
+│  ├─ __init__.py
+│  ├─ __pycache__
+│  │  ├─ config.cpython-310.pyc
+│  │  ├─ main.cpython-310.pyc
+│  │  ├─ models.cpython-310.pyc
+│  │  ├─ mongodb.cpython-310.pyc
+│  │  ├─ notifier.cpython-310.pyc
+│  │  ├─ request_models.cpython-310.pyc
+│  │  └─ utils.cpython-310.pyc
+│  ├─ api
+│  │  ├─ __init__.py
+│  │  ├─ __pycache__
+│  │  │  ├─ __init__.cpython-310.pyc
+│  │  │  ├─ auth.cpython-310.pyc
+│  │  │  ├─ rooms.cpython-310.pyc
+│  │  │  ├─ twilio.cpython-310.pyc
+│  │  │  └─ users.cpython-310.pyc
+│  │  ├─ auth.py
+│  │  ├─ rooms.py
+│  │  ├─ twilio.py
+│  │  └─ users.py
+│  ├─ config.py
+│  ├─ controllers
+│  │  ├─ __init__.py
+│  │  ├─ __pycache__
+│  │  │  ├─ __init__.cpython-310.pyc
+│  │  │  ├─ rooms.cpython-310.pyc
+│  │  │  ├─ s3.cpython-310.pyc
+│  │  │  └─ users.cpython-310.pyc
+│  │  ├─ fire_storage.py
+│  │  ├─ rooms.py
+│  │  ├─ s3.py
+│  │  └─ users.py
+│  ├─ environment.yml
+│  ├─ main.py
+│  ├─ models.py
+│  ├─ mongodb.py
+│  ├─ notifier.py
+│  ├─ request_models.py
+│  ├─ requirements.txt
+│  ├─ run
+│  └─ utils.py
+├─ Front-End
+│  ├─ .d.ts
+│  ├─ .eslintcache
+│  ├─ README.md
+│  ├─ package-lock.json
+│  ├─ package.json
+│  ├─ public
+│  │  ├─ favicon.ico
+│  │  ├─ index.html
+│  │  ├─ logo192.png
+│  │  ├─ logo512.png
+│  │  ├─ manifest.json
+│  │  └─ robots.txt
+│  └─ src
+│     ├─ App.css
+│     ├─ App.js
+│     ├─ App.test.js
+│     ├─ api
+│     │  ├─ auth.js
+│     │  └─ rooms.js
+│     ├─ components
+│     │  ├─ ChatModule.js
+│     │  ├─ NavBar.js
+│     │  ├─ Participant.js
+│     │  ├─ ProtectedRoute.js
+│     │  ├─ Track.js
+│     │  └─ VideoChatModule.js
+│     ├─ config.json
+│     ├─ index.css
+│     ├─ index.js
+│     ├─ logo.svg
+│     ├─ pages
+│     │  ├─ Dashboard.js
+│     │  ├─ Favorites.js
+│     │  ├─ Home.js
+│     │  ├─ Login.js
+│     │  ├─ Profile.js
+│     │  └─ VideoChatPage.js
+│     ├─ reportWebVitals.js
+│     └─ setupTests.js
+├─ LICENSE
+└─ README.md
+
+```

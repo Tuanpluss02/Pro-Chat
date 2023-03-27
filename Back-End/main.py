@@ -59,8 +59,8 @@ async def startup_event():
         room_collection = db.rooms
         user_collection.create_index("username", name="username", unique=True)
         room_collection.create_index("room_name", name="room_name", unique=True)
-    except pymongo.errors.CollectionInvalid as e:
-        logging.warning(e)
+    except:
+        print("Index already exists")
         pass
 
 
@@ -110,7 +110,7 @@ async def websocket_endpoint(websocket: WebSocket, room_name, user_name):
         logger.error(message)
         # remove user
         logger.warning("Disconnecting Websocket")
-        await remove_user_from_room(None, room_name, username=user_name)
+        await remove_user_from_room(None, room_name, username=user_name) 
         room = await get_room(room_name)
         data = {
             "content": f"{user_name} has left the chat",

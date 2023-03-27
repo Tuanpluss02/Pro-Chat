@@ -1,0 +1,36 @@
+Feature
+- create group chat, private chat
+- Chat {
+	+ send = text, emoji, (image, file)
+	+ private, group
+}
+- Noti
+- Favorites
+- Settings = change email, passowrd, picture, display name, (dark mode, light mode).
+- Share QR to add (option)
+- video call (option) - twillo 
+
+
+User:
+- user ID
+- Display name
+- avatar => base64 encode
+- email => regex
+- username Tuanpluss02 => @Tuanpluss02
+- password => 6 chars, upper, number => regex
+- Chat {
+	+ private {
+		id	
+}
+	+ group {
+		id	
+	}
+}
+- favorites
+
+Group:
+- group id
+- name
+- avatar
+- user
+- message

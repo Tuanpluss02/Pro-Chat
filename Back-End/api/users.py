@@ -1,5 +1,5 @@
 import logging
-from fastapi import Depends, APIRouter, File, UploadFile
+from fastapi import Depends, APIRouter
 
 from request_models import FavoriteRequest
 
@@ -8,7 +8,6 @@ from controllers import (
     remove_favorite_from_user,
     get_current_active_user,
     get_user_favorites,
-    update_profile_picture,
 )
 from models import User
 from mongodb import get_nosql_db, MongoClient
@@ -56,17 +55,17 @@ async def get_favorite_rooms(
         logger.error(f"/favorites: {e}")
 
 
-@router.post("/user/profile_picture", tags=["User"])
-async def upload_profile_picture(
-    file: UploadFile = File(...),
-    current_user: User = Depends(get_current_active_user),
-    client: MongoClient = Depends(get_nosql_db),
-):
-    """
-    Upload a profile picture for the current user
-    """
-    try:
-        new_user = await update_profile_picture(current_user, file.file, file.filename)
-        return new_user
-    except Exception as e:
-        logger.error(f"POST /user/profile_picture: {e}")
+# @router.post("/user/profile_picture", tags=["User"])
+# async def upload_profile_picture(
+#     file: UploadFile = File(...),
+#     current_user: User = Depends(get_current_active_user),
+#     client: MongoClient = Depends(get_nosql_db),
+# ):
+#     """
+#     Upload a profile picture for the current user
+#     """
+#     try:
+#         new_user = await update_profile_picture(current_user, file.file, file.filename)
+#         return new_user
+#     except Exception as e:
+#         logger.error(f"POST /user/profile_picture: {e}")

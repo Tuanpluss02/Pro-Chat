@@ -10,11 +10,10 @@ from jose import JWTError, jwt
 from passlib.context import CryptContext
 from utils import format_ids
 import logging
-from controllers.s3 import upload_file_to_s3
 
 logger = logging.getLogger(__name__)
 pwd_context = CryptContext(schemes=["bcrypt"], default="bcrypt")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/token")
 
 SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
 ALGORITHM = "HS256"
@@ -134,16 +133,12 @@ async def remove_favorite_from_user(username, favorite):
     return user
 
 
-async def update_profile_picture(user, file, filename):
-    client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    users_collection = db.users
-    s3_result = upload_file_to_s3(file, filename)
-    if s3_result:
-        logger.info("S3 upload success")
-        s3_key = s3_result
-        users_collection.update_one({"username": user.username}, {"$set": {"profile_pic_img_src": s3_key}})
-    else:
-        logger.info("S3 upload failure")
-    new_user = await get_user(user.username)
-    return new_user
+# async def update_profile_picture(user, file, filename):
+#     client = await get_nosql_db()
+#     db = client[MONGODB_DB_NAME]
+#     users_collection = db.users
+#     users_collection.update_one({"username": user.username}, {"$set": {"profile_pic_img_src": s3_key}})
+#     else:
+#         logger.info("S3 upload failure")
+#     new_user = await get_user(user.username)
+#     return new_user

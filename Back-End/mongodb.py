@@ -7,7 +7,7 @@ from config import MONGODB_URL, MAX_CONNECTIONS_COUNT, MIN_CONNECTIONS_COUNT
 # MongoDB
 class MongoDB:
     # client: AsyncIOMotorClient = None
-    client: MongoClient = None
+    client: MongoClient
 
 
 db = MongoDB()

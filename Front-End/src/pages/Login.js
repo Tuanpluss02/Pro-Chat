@@ -1,15 +1,12 @@
+import axios from "axios";
+import {
+  Box, Button,
+  defaultTheme,
+  fontSizes, Row, Stack
+} from "luxor-component-library";
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { login, register } from "../api/auth";
-import {
-  Box,
-  Stack,
-  Row,
-  Button,
-  defaultTheme,
-  fontSizes,
-} from "luxor-component-library";
-import axios from "axios";
 
 class Login extends React.Component {
   constructor() {
@@ -52,7 +49,7 @@ class Login extends React.Component {
     let config = {
       headers: {
         "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        accept: "application/json",
+        "accept": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
     };
@@ -75,25 +72,54 @@ class Login extends React.Component {
       });
   }
 
+  // registerHandler(e) {
+  //   //API Call then set token to response
+  //   e.preventDefault();
+  //   fetch(register, {
+  //     method: "PUT",
+  //     headers: {
+  //       accept: "application/json",
+  //       "Access-Control-Allow-Origin": "*",
+  //     },
+  //     body: JSON.stringify({
+  //       username: this.state.username,
+  //       password: this.state.password,
+  //     }),
+  //   })
+  //     .then((response) => response.json())
+  // .then((response) => {
+  //   console.log(response);
+  //   if (response.access_token !== undefined) {
+  //     localStorage.setItem("token", response.access_token);
+  //     this.setState({ isLoggedIn: true });
+  //   } else {
+  //     this.setState({ error_message: "Please try again." });
+  //   }
+  // })
+  // .catch((err) => {
+  //   console.log(err);
+  // });
+  // }
+
+
   registerHandler(e) {
-    //API Call then set token to response
-    e.preventDefault();
-    fetch(register, {
-      method: "PUT",
+    const params = new URLSearchParams();
+    params.append("username", this.state.username);
+    params.append("password", this.state.password);
+
+    let config = {
       headers: {
-        accept: "application/json",
+        "content-type": "application/json",
+        "accept": "application/json",
         "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({
-        username: this.state.username,
-        password: this.state.password,
-      }),
-    })
-      .then((response) => response.json())
+    };
+    axios
+      .put(register, params, config)
       .then((response) => {
         console.log(response);
-        if (response.access_token !== undefined) {
-          localStorage.setItem("token", response.access_token);
+        if (response.data.access_token !== undefined) {
+          localStorage.setItem("token", response.data.access_token);
           this.setState({ isLoggedIn: true });
         } else {
           this.setState({ error_message: "Please try again." });
@@ -103,6 +129,7 @@ class Login extends React.Component {
         console.log(err);
       });
   }
+
 
   render() {
     const input_text_style = {

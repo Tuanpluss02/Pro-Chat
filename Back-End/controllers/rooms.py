@@ -66,7 +66,7 @@ async def get_room(room_name) -> RoomInDB:
         row = format_ids(row)
         return row
     else:
-        return None
+        return RoomInDB(**{})
 
 
 async def add_user_to_room(username: str, room_name: str):
@@ -75,7 +75,6 @@ async def add_user_to_room(username: str, room_name: str):
     try:
         room = await get_room(room_name)
         user = await get_user(username)
-
         collection = db.rooms
         username_list = [m["username"] for m in room["members"]]
         if user.username not in username_list:

@@ -20,7 +20,9 @@ async def upload_message_to_room(data):
         message_data["user"] = user
         message_data.pop("room_name", None)
         collection = db.rooms
-        collection.update_one({"_id": ObjectId(room._id)}, {"$push": {"messages": message_data}})
+        collection.update_one({"_id": ObjectId(room['_id'])}, {
+                              "$push": {"messages": message_data}})
+        print('4444444444444', message_data)
         return True
     except Exception as e:
         logger.error(f"Error adding message to DB: {type(e)} {e}")
@@ -66,6 +68,7 @@ async def get_room(room_name) -> RoomInDB:
     else:
         return None
 
+
 async def add_user_to_room(username: str, room_name: str):
     client = await get_nosql_db()
     db = client[MONGODB_DB_NAME]
@@ -76,14 +79,16 @@ async def add_user_to_room(username: str, room_name: str):
         collection = db.rooms
         username_list = [m["username"] for m in room["members"]]
         if user.username not in username_list:
-            logger.info(f"Adding {user.username} to members")
-            collection.update_one({"_id": ObjectId(room._id)}, {"$push": {"members": user}})
+            print('555555555555555555', type(user))
+            logger.info(f"Adding {user['username']} to members")
+            collection.update_one({"_id": ObjectId(room['_id'])}, {
+                                  "$push": {"members": user}})
             return True
         else:
-            logger.info(f"{user.username} is already a member")
+            logger.info(f"{user['username']} is already a member")
             return True
     except Exception as e:
-        logger.error(f"Error updating members: {e}")
+        logger.error(f"Error 6666666 updating members: {e}")
         return None
 
 
@@ -100,7 +105,8 @@ async def remove_user_from_room(user: User, room_name: str, username=None):
         if user.username in username_list:
             logger.info(f"Removing {user.username} from {room_name} members")
             collection.update_one(
-                {"_id": ObjectId(room._id)}, {"$pull": {"members": {"username": user.username}}}
+                {"_id": ObjectId(room._id)}, {
+                    "$pull": {"members": {"username": user.username}}}
             )
             return True
         else:
@@ -116,10 +122,14 @@ async def set_room_activity(room_name, activity_bool):
     db_client = client[MONGODB_DB_NAME]
     db = db_client.rooms
     room = await get_room(room_name)
+    print('-----------', room)
+    print('2222222', type(room))
+    print('3333333', room['_id'])
     if room is not None:
-        _id = room._id
+        _id = room['_id']
         try:
-            result = db.update_one({"_id": ObjectId(_id)}, {"$set": {"active": activity_bool}})
+            result = db.update_one({"_id": ObjectId(_id)}, {
+                                   "$set": {"active": activity_bool}})
             logger.info(f"Updated room activity {result}")
         except Exception as e:
             logger.error(f"ERROR SETTING ACTIVITY: {e}")

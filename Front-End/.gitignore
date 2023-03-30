@@ -4,7 +4,7 @@
 /node_modules
 /.pnp
 .pnp.js
-*/config.json
+# */config.json
 
 # testing
 /coverage
@@ -25,3 +25,4 @@ package-lock.json
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+/chat

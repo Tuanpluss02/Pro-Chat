@@ -1,3 +1,5 @@
+from typing import Optional
+from fastapi import HTTPException
 from config import MONGODB_DB_NAME
 from controllers.users import get_user
 from utils import format_ids
@@ -33,6 +35,8 @@ async def insert_room(username, room_name, collection):
     room = {}
     room["room_name"] = room_name
     user = await get_user(username)
+    if user is None:
+        raise HTTPException(status_code=404, detail="User not found")
     room["members"] = [user] if user is not None else []
     dbroom = RoomInDB(**room)
     response = collection.insert_one(dbroom.dict())
@@ -41,7 +45,7 @@ async def insert_room(username, room_name, collection):
     return res
 
 
-async def get_rooms(filter_list: list = None):
+async def get_rooms(filter_list: Optional[list] = None):
     client = await get_nosql_db()
     db = client[MONGODB_DB_NAME]
     collection = db.rooms
@@ -76,6 +80,8 @@ async def add_user_to_room(username: str, room_name: str):
         room = await get_room(room_name)
         user = await get_user(username)
         collection = db.rooms
+        if room is None or user is None:
+            return False
         username_list = [m["username"] for m in room["members"]]
         if user.username not in username_list:
             print('555555555555555555', type(user))

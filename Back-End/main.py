@@ -1,16 +1,12 @@
 from fastapi import FastAPI, WebSocket
 
-# from websockets.exceptions import ConnectionClosedError
-# from starlette.websockets import WebSocketDisconnect
 from controllers import get_room, remove_user_from_room, add_user_to_room, upload_message_to_room
-from mongodb import close_mongo_connection, connect_to_mongo, get_nosql_db
+from models import User
+from mongodb import close_mongo_connection
 from starlette.middleware.cors import CORSMiddleware
-from config import MONGODB_DB_NAME
 from api import router as api_router
 from notifier import ConnectionManager
 from starlette.websockets import WebSocketState
-
-import pymongo
 import logging
 import json
 
@@ -35,11 +31,11 @@ app.add_middleware(
 )
 
 
-@app.on_event("startup")
-async def startup_event():
-    await connect_to_mongo()
-    client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
+# @app.on_event("startup")
+# async def startup_event():
+#     await connect_to_mongo()
+#     client = await get_nosql_db()
+#     db = client[MONGODB_DB_NAME]
     # try:
     #     db.create_collection("users")
     # except pymongo.errors.CollectionInvalid as e:
@@ -55,14 +51,14 @@ async def startup_event():
     # except pymongo.errors.CollectionInvalid as e:
     #     logging.warning(e)
     #     pass
-    try:
-        user_collection = db.users
-        room_collection = db.rooms
-        user_collection.create_index("username", name="username", unique=True)
-        room_collection.create_index("room_name", name="room_name", unique=True)
-    except:
-        print("Index already exists")
-        pass
+    # try:
+    #     user_collection = db.users
+    #     room_collection = db.rooms
+    #     user_collection.create_index("username", name="username", unique=True)
+    #     room_collection.create_index("room_name", name="room_name", unique=True)
+    # except:
+    #     print("Index already exists")
+    #     pass
 
 
 @app.on_event("shutdown")
@@ -111,7 +107,7 @@ async def websocket_endpoint(websocket: WebSocket, room_name, user_name):
         logger.error(message)
         # remove user
         logger.warning("Disconnecting Websocket")
-        await remove_user_from_room(None, room_name, username=user_name) 
+        await remove_user_from_room(User(**{}), room_name, username=user_name) 
         room = await get_room(room_name)
         data = {
             "content": f"{user_name} has left the chat",

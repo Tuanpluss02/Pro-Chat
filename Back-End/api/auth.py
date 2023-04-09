@@ -5,18 +5,18 @@ from fastapi import Depends, APIRouter, HTTPException, status
 
 from request_models import RegisterRequest
 from fastapi.security import OAuth2PasswordRequestForm
+from config import MONGODB_DB_NAME,ACCESS_TOKEN_EXPIRE_MINUTES
 
 from controllers import (
     create_user,
     authenticate_user,
     get_current_active_user,
     create_access_token,
-    ACCESS_TOKEN_EXPIRE_MINUTES,
 )
 from models import User
 from mongodb import get_nosql_db, MongoClient
 from models import Token
-from config import MONGODB_DB_NAME
+
 
 logger = logging.getLogger(__name__)
 
@@ -42,20 +42,19 @@ async def login_for_access_token(
     return {"access_token": access_token, "token_type": "bearer"}
 
 
-@router.put("/register", tags=["Authentication"], response_model=Token)
+@router.post("/register", tags=["Authentication"], response_model=Token)
 async def create_user_in_db(request: RegisterRequest, client: MongoClient = Depends(get_nosql_db)):
     """
     Register user and retrieve access token
     """
-    db = client[MONGODB_DB_NAME]
-    collection = db.users
+    # collection = client.users
     try:
-        await create_user(request, collection)
+        print('1111111111111111111111111')
+        await create_user(request, client)
     except Exception as e:
         logger.error(f"/register: {e}")
         pass
 
-    # now login and generate token
     user = await authenticate_user(request.username, request.password)
     if not user:
         raise HTTPException(

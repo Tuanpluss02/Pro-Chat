@@ -1,23 +1,22 @@
 import bcrypt
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import List, Optional
 from fastapi.security import OAuth2PasswordBearer
 from fastapi import Depends, HTTPException, status
-from mongodb import get_nosql_db
+from pymongo import MongoClient
+from config import ALGORITHM, MONGODB_DB_NAME, SECRET_KEY
 from models import TokenData, User, UserInDB
-from config import MONGODB_DB_NAME
 from jose import JWTError, jwt
 from passlib.context import CryptContext
-from utils import format_ids
+from mongodb import get_nosql_db
 import logging
+
+from utils import format_ids
+
 
 logger = logging.getLogger(__name__)
 pwd_context = CryptContext(schemes=["bcrypt"], default="bcrypt")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/token")
-
-SECRET_KEY = "09d25e094faa6ca2556c818166b7a9563b93f7099f6f0f4caa6cf63b88e8d3e7"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
 
 
 def verify_password(plain_password_w_salt, hashed_password):
@@ -25,7 +24,7 @@ def verify_password(plain_password_w_salt, hashed_password):
 
 
 def get_password_hash(password_w_salt):
-    return pwd_context.hash(password_w_salt)
+    return pwd_context.hash(password_w_salt)    
 
 
 async def authenticate_user(username: str, password: str):
@@ -48,7 +47,7 @@ def create_access_token(data: dict, expires_delta: Optional[timedelta] = None):
     return encoded_jwt
 
 
-async def get_current_user(token: str = Depends(oauth2_scheme)):
+async def get_current_user(token: str = Depends(oauth2_scheme)) -> User:
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
         detail="Could not validate credentials",
@@ -65,26 +64,31 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
     user = await get_user(token_data.username)
     if user is None:
         raise credentials_exception
-    return User(**user)
+    return user
 
 
 async def get_current_active_user(current_user: User = Depends(get_current_user)):
-    if current_user.disabled:
+    if current_user is None:
         raise HTTPException(status_code=400, detail="Inactive user")
     return current_user
 
 
-async def create_user(request, collection):
+async def create_user(request, client:MongoClient):
     salt = bcrypt.gensalt().decode()
     hashed_password = get_password_hash(request.password + salt)
-
     user = {}
     user["username"] = request.username
     user["salt"] = salt
     user["hashed_password"] = hashed_password
-    dbuser = UserInDB(**user)
+    user["urls"] = []
+    dbuser = UserInDB(**user)   
+    print("2222222222222222222222222222")
+    print(dbuser)
+    collection = client[MONGODB_DB_NAME].users
     try:
         response = collection.insert_one(dict(dbuser))
+        print("33333333333333333333333333")
+        print(response)
         return {"id_inserted": str(response.inserted_id)}
     except Exception as e:
         raise Exception(f"{e}")
@@ -92,14 +96,24 @@ async def create_user(request, collection):
 
 async def get_user(name) -> UserInDB:
     client = await get_nosql_db()
-    db = client[MONGODB_DB_NAME]
-    users_collection = db.users
+    users_collection = client[MONGODB_DB_NAME].users
     row = users_collection.find_one({"username": name})
     if row is not None:
         row = format_ids(row)
         return row
     else:
-        return None
+        return UserInDB(**{})
+
+async def get_user_ins(name:str) -> UserInDB:
+    client = await get_nosql_db()
+    users_collection = client[MONGODB_DB_NAME].users
+    mongo_response = users_collection.find_one({"username": name})
+    if mongo_response is None:
+        return UserInDB(**{})
+    user_data_dict = mongo_response.copy()  # make a copy of the data
+    user_data_dict['_id'] = str(mongo_response['_id'])  # convert ObjectId to string    url_data = UrlInDB(**url_data_dict) 
+    user_data = UserInDB(**user_data_dict)
+    return user_data
 
 
 async def add_favlist_to_user(username, favorite_list):
@@ -107,7 +121,7 @@ async def add_favlist_to_user(username, favorite_list):
     db = client[MONGODB_DB_NAME]
     users_collection = db.users
     user_obj = await get_user(username)
-    if "favorites" in user_obj:
+    if user_obj['favorites'] is not None:
         missing_favorites = [item for item in favorite_list if item not in user_obj["favorites"]]
     else:
         missing_favorites = favorite_list

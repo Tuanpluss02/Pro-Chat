@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios from 'axios';
 import {
   Box, Button,
   defaultTheme,
@@ -6,7 +6,6 @@ import {
 } from "luxor-component-library";
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { login, register } from "../api/auth";
 
 class Login extends React.Component {
   constructor() {
@@ -54,7 +53,7 @@ class Login extends React.Component {
       },
     };
     axios
-      .post(login, params, config)
+      .post("http://127.0.0.1:8000/api/token", params, config)
       .then((response) => {
         console.log(response.data.access_token);
         if (response.data.access_token !== undefined) {
@@ -72,62 +71,32 @@ class Login extends React.Component {
       });
   }
 
-  // registerHandler(e) {
-  //   //API Call then set token to response
-  //   e.preventDefault();
-  //   fetch(register, {
-  //     method: "PUT",
-  //     headers: {
-  //       accept: "application/json",
-  //       "Access-Control-Allow-Origin": "*",
-  //     },
-  //     body: JSON.stringify({
-  //       username: this.state.username,
-  //       password: this.state.password,
-  //     }),
-  //   })
-  //     .then((response) => response.json())
-  // .then((response) => {
-  //   console.log(response);
-  //   if (response.access_token !== undefined) {
-  //     localStorage.setItem("token", response.access_token);
-  //     this.setState({ isLoggedIn: true });
-  //   } else {
-  //     this.setState({ error_message: "Please try again." });
-  //   }
-  // })
-  // .catch((err) => {
-  //   console.log(err);
-  // });
-  // }
+
 
 
   registerHandler(e) {
-    const params = new URLSearchParams();
-    params.append("username", this.state.username);
-    params.append("password", this.state.password);
-
-    let config = {
-      headers: {
-        "content-type": "application/json",
-        "accept": "application/json",
-        "Access-Control-Allow-Origin": "*",
-      },
-    };
-    axios
-      .put(register, params, config)
-      .then((response) => {
-        console.log(response);
-        if (response.data.access_token !== undefined) {
-          localStorage.setItem("token", response.data.access_token);
-          this.setState({ isLoggedIn: true });
-        } else {
-          this.setState({ error_message: "Please try again." });
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    async function signupRequest(username, password) {
+      try {
+        const response = await axios.post(
+          `http://127.0.0.1:8000/api/register`,
+          {
+            username: username,
+            password: password,
+          },
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              accept: 'application/json',
+            },
+          }
+        );
+        console.log(response.data);
+        if (response.status !== 200) return null;
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    signupRequest(this.state.username, this.state.password);
   }
 
 

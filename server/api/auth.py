@@ -47,9 +47,7 @@ async def create_user_in_db(request: RegisterRequest, client: MongoClient = Depe
     """
     Register user and retrieve access token
     """
-    # collection = client.users
     try:
-        print('1111111111111111111111111')
         await create_user(request, client)
     except Exception as e:
         logger.error(f"/register: {e}")

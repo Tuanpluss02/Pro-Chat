@@ -6,6 +6,7 @@ import {
 } from "luxor-component-library";
 import React from "react";
 import { Redirect } from "react-router-dom";
+import { login } from '../api/auth';
 
 class Login extends React.Component {
   constructor() {
@@ -53,7 +54,7 @@ class Login extends React.Component {
       },
     };
     axios
-      .post("http://127.0.0.1:8000/api/token", params, config)
+      .post(login, params, config)
       .then((response) => {
         console.log(response.data.access_token);
         if (response.data.access_token !== undefined) {
@@ -78,7 +79,7 @@ class Login extends React.Component {
     async function signupRequest(username, password) {
       try {
         const response = await axios.post(
-          `http://127.0.0.1:8000/api/register`,
+          register,
           {
             username: username,
             password: password,

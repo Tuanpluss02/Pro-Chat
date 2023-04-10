@@ -82,13 +82,9 @@ async def create_user(request, client:MongoClient):
     user["hashed_password"] = hashed_password
     user["urls"] = []
     dbuser = UserInDB(**user)   
-    print("2222222222222222222222222222")
-    print(dbuser)
     collection = client[MONGODB_DB_NAME].users
     try:
         response = collection.insert_one(dict(dbuser))
-        print("33333333333333333333333333")
-        print(response)
         return {"id_inserted": str(response.inserted_id)}
     except Exception as e:
         raise Exception(f"{e}")
@@ -146,13 +142,3 @@ async def remove_favorite_from_user(username, favorite):
     user = await get_user(username)
     return user
 
-
-# async def update_profile_picture(user, file, filename):
-#     client = await get_nosql_db()
-#     db = client[MONGODB_DB_NAME]
-#     users_collection = db.users
-#     users_collection.update_one({"username": user.username}, {"$set": {"profile_pic_img_src": s3_key}})
-#     else:
-#         logger.info("S3 upload failure")
-#     new_user = await get_user(user.username)
-#     return new_user

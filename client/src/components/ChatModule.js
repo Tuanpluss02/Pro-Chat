@@ -1,22 +1,11 @@
-import React from "react";
-import { animateScroll } from "react-scroll";
-import EmojiPicker from "emoji-picker-react";
 import EmojiConverter from "emoji-js";
-import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
-import VideoCallIcon from "@material-ui/icons/VideoCall";
+import React from "react";
 import { Redirect } from "react-router-dom";
+import { animateScroll } from "react-scroll";
 
-import {
-  Box,
-  Button,
-  Row,
-  Stack,
-  defaultTheme,
-  fontSizes,
-} from "luxor-component-library";
-import { get_room, put_user_into_room } from "../api/rooms";
-import { get_user_from_token } from "../api/auth";
 import axios from "axios";
+import { get_user_from_token } from "../api/auth";
+import { get_room, put_user_into_room } from "../api/rooms";
 
 var jsemoji = new EmojiConverter();
 jsemoji.replace_mode = "unified";
@@ -59,9 +48,9 @@ class ChatModule extends React.Component {
     if (client === null || client.readyState === WebSocket.CLOSED) {
       client = new WebSocket(
         "ws://localhost:8000/ws/" +
-          this.state.room_name +
-          "/" +
-          this.state.currentUser
+        this.state.room_name +
+        "/" +
+        this.state.currentUser
       );
     }
   }
@@ -226,48 +215,28 @@ class ChatModule extends React.Component {
   }
 
   render() {
-    const input_text_style = {
-      padding: "10px",
-      paddingLeft: "25px",
-      paddingRight: "25px",
-      width: "600px",
-      borderRadius: "3em",
-      outline: "none",
-      border: `2px solid ${defaultTheme.palette.error.main}`,
-      fontWeight: 400,
-      fontSize: fontSizes.medium,
-      fontFamily: defaultTheme.typography.primaryFontFamily,
-      color: defaultTheme.palette.grey[400],
-    };
+    const input_text_style = "px-10 py-10 pl-25 pr-25 w-600 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
     const {
       isLoaded,
       messages,
-      members,
+      // members,
       openVideoChat,
       room_name,
     } = this.state;
     if (!isLoaded) {
       return (
-        <Box
-          margin="xlarge"
-          padding="large"
-          width="600px"
-          height="600px"
-          roundedCorners
-          backgroundColor={defaultTheme.palette.secondary.light}
-        >
+        <div className="m-8 p-4 w-600 h-600 rounded-lg bg-secondary-light">
           <h1>Loading...</h1>
-        </Box>
+        </div>
       );
     } else if (openVideoChat) {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
       return (
-        <Row width="100%">
-          <Stack width="800px">
-            <Box
-              padding="medium"
-              roundedCorners
+        <div className="w-full">
+          <div className="w-800px mx-auto">
+            <div
+              className="p-4 rounded-lg"
               style={{
                 overflow: "scroll",
                 height: "600px",
@@ -275,181 +244,58 @@ class ChatModule extends React.Component {
               }}
               id="message-list"
             >
-              <Stack space="medium" width="800px">
+              <div className="space-y-4 w-800px">
                 {messages.map((message, index) => {
                   return (
                     <div
-                      style={{
-                        display: "flex",
-                        flexDirection:
-                          message.user.username === this.state.currentUser
-                            ? "row"
-                            : "row-reverse",
-                        float:
-                          message.user.username === this.state.currentUser
-                            ? "right"
-                            : "left",
-                        textAlign:
-                          message.user.username === this.state.currentUser
-                            ? "right"
-                            : "left",
-                        marginLeft:
-                          message.user.username === this.state.currentUser
-                            ? "400px"
-                            : "auto",
-                        marginRight:
-                          message.user.username === this.state.currentUser
-                            ? "auto"
-                            : "400px",
-                      }}
+                      className={`flex flex-row ${message.user.username === this.state.currentUser
+                        ? "flex-row-reverse float-right text-right mr-auto"
+                        : "flex-row float-left text-left ml-auto"
+                        }`}
                     >
-                      <Box
-                        marginX="large"
-                        padding="small"
-                        backgroundColor={
-                          message.user.username === this.state.currentUser
-                            ? defaultTheme.palette.error.main
-                            : defaultTheme.palette.primary.main
-                        }
-                        color={
-                          message.user.username === this.state.currentUser
-                            ? defaultTheme.palette.common.white
-                            : defaultTheme.palette.common.white
-                        }
-                        roundedCorners
-                        marginBottom="small"
-                        style={{
-                          float:
-                            message.user.username === this.state.currentUser
-                              ? "right"
-                              : "left",
-                        }}
-                        textAlign={
-                          message.user.username === this.state.currentUser
-                            ? "right"
-                            : "left"
-                        }
-                        key={{ index }}
+                      <div
+                        className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
+                          ? "bg-red-500"
+                          : ""
+                          }`}
                       >
                         {message.content}
-                      </Box>
-                      <Box
-                        padding="small"
-                        style={{
-                          float:
-                            message.user.username === this.state.currentUser
-                              ? "right"
-                              : "left",
-                        }}
-                        textAlign={
-                          message.user.username === this.state.currentUser
-                            ? "right"
-                            : "left"
-                        }
-                      >
-                        {message.user.username}
-                      </Box>
+                      </div>
                     </div>
                   );
                 })}
-              </Stack>
-            </Box>
-            <Row width="800px" padding="medium" space="small">
-              <Box padding="small">
-                <input
-                  id="messageText"
-                  style={input_text_style}
-                  value={this.state.message_draft}
-                  onChange={this.onInputChange}
-                  onFocus={this.checkWebSocketConnection}
-                  onKeyUp={(e) => this.onEnterHandler(e)}
-                  autoComplete="off"
-                />
-              </Box>
-              <Row
-                paddingY="small"
-                width="400px"
-                style={{ position: "relative" }}
+              </div>
+            </div>
+            <div className="w-full flex justify-between items-center">
+              <input
+                type="text"
+                className={input_text_style}
+                placeholder="Type a message..."
+                value={this.state.message_draft}
+                onChange={(event) =>
+                  this.setState({ message_draft: event.target.value })
+                }
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    this.sendMessage();
+                  }
+                }}
+              />
+              <button
+                className="px-4 py-2 rounded-full bg-red-500 text-white font-medium"
+                onClick={() => this.sendMessage()}
               >
-                <Box
-                  style={{
-                    display: this.state.openEmoji ? "block" : "none",
-                    position: "absolute",
-                    bottom: "0",
-                    left: "0",
-                    marginBottom: "70px",
-                  }}
-                >
-                  <EmojiPicker
-                    preload
-                    disableDiversityPicker
-                    onEmojiClick={this.onEmojiSelection}
-                  />
-                </Box>
-                <Button
-                  variant="outline"
-                  color="error"
-                  size="small"
-                  style={{
-                    marginRight: "10px",
-                    border: `2px solid ${defaultTheme.palette.error.main}`,
-                  }}
-                  onClick={this.onOpenEmoji}
-                  text={<SentimentVerySatisfiedIcon />}
-                />
-                <Button
-                  variant="outline"
-                  color="error"
-                  size="small"
-                  style={{
-                    marginRight: "10px",
-                    border: `2px solid ${defaultTheme.palette.error.main}`,
-                  }}
-                  onClick={this.onOpenVideoChat}
-                  text={<VideoCallIcon />}
-                />
-                <Button
-                  variant="outline"
-                  color="primary"
-                  size="medium"
-                  text="Send"
-                  onClick={this.onClickHandler}
-                />
-              </Row>
-            </Row>
-          </Stack>
-          <Box
-            padding="medium"
-            roundedCorners
-            style={{
-              overflow: "scroll",
-              height: "600px",
-              width: "800px",
-            }}
-          >
-            <Stack space="small">
-              <Box>
-                <h1>Room Members</h1>
-              </Box>
-              {members.map((member, index) => {
-                return (
-                  <Box
-                    padding="small"
-                    color={defaultTheme.palette.common.black}
-                    marginBottom="small"
-                    textAlign="center"
-                    key={{ index }}
-                    roundedCorners
-                  >
-                    {member.username}
-                  </Box>
-                );
-              })}
-            </Stack>
-          </Box>
-        </Row>
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
       );
     }
   }
+
+
 }
 export { ChatModule };
+

@@ -1,4 +1,3 @@
-import { Box, defaultTheme } from "luxor-component-library";
 import React from "react";
 import { NavLink } from "react-router-dom";
 
@@ -6,37 +5,27 @@ class NavBar extends React.Component {
   render() {
     return (
       <div
-        style={{
-          padding: "20px",
-          backgroundColor: defaultTheme.palette.primary.light,
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "flex-start",
-        }}
+        className="px-5 py-3 bg-blue-500 flex flex-row justify-start"
       >
-        <Box paddingX="small">
+        <div className="px-2">
           <NavLink
-            style={{
-              textDecoration: "none",
-              color: defaultTheme.palette.common.white,
-            }}
+            className="text-white no-underline"
             to="/"
           >
             Home
           </NavLink>
+        </div>
+        <div className="px-2">
           <NavLink
-            style={{
-              textDecoration: "none",
-              color: defaultTheme.palette.common.white,
-              marginLeft: "30px",
-            }}
+            className="text-white no-underline"
             to="/profile"
           >
             Profile
           </NavLink>
-        </Box>
+        </div>
       </div>
     );
   }
 }
 export default NavBar;
+

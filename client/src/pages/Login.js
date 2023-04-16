@@ -6,7 +6,8 @@ import {
 } from "luxor-component-library";
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { login } from '../api/auth';
+import { login, register } from '../api/auth';
+
 
 class Login extends React.Component {
   constructor() {
@@ -120,80 +121,78 @@ class Login extends React.Component {
       return <Redirect push to="" />;
     } else {
       return (
-        <Box
-          padding="large"
-          height="720px"
-          backgroundColor={defaultTheme.palette.grey[100]}
-          textAlign="center"
-          style={{
-            height: "100vh",
-          }}
-        >
-          <Stack>
-            <Box
-              style={{ fontSize: "2rem" }}
-              color={defaultTheme.palette.secondary.light}
-              paddingBottom="large"
-            >
-              <span>
-                <h1 style={{ color: defaultTheme.palette.secondary.light }}>
-                  Minimal
-                </h1>
-                <h1 style={{ color: defaultTheme.palette.primary.main }}>
-                  Chat.
-                </h1>
-              </span>
-            </Box>
-            <Stack space="medium" padding="medium">
-              <Box>
-                <input
-                  style={input_text_style}
-                  value={this.state.username}
-                  onChange={(e) => this.usernameChange(e)}
-                  autoComplete="off"
-                  placeholder="Enter Username"
-                  name="uname"
-                  required
-                />
+        <><div className="ml-10 text-yellow-300">thisssss</div>
+          <Box
+            padding="large"
+            height="720px"
+            backgroundColor={defaultTheme.palette.grey[100]}
+            textAlign="center"
+            style={{
+              height: "100vh",
+            }}
+          >
+            <Stack>
+              <Box
+                style={{ fontSize: "2rem" }}
+                color={defaultTheme.palette.secondary.light}
+                paddingBottom="large"
+              >
+                <span>
+                  <h1 style={{ color: defaultTheme.palette.secondary.light }}>
+                    Minimal
+                  </h1>
+                  <h1 style={{ color: defaultTheme.palette.primary.main }}>
+                    Chat.
+                  </h1>
+                </span>
               </Box>
-              <Box>
-                <input
-                  style={input_text_style}
-                  value={this.state.password}
-                  onChange={(e) => this.passwordChange(e)}
-                  autoComplete="off"
-                  placeholder="Enter Password"
-                  name="psw"
-                  required
-                  type="password"
-                />
+              <Stack space="medium" padding="medium">
+                <Box>
+                  <input
+                    style={input_text_style}
+                    value={this.state.username}
+                    onChange={(e) => this.usernameChange(e)}
+                    autoComplete="off"
+                    placeholder="Enter Username"
+                    name="uname"
+                    required />
+                </Box>
+                <Box>
+                  <input
+                    style={input_text_style}
+                    value={this.state.password}
+                    onChange={(e) => this.passwordChange(e)}
+                    autoComplete="off"
+                    placeholder="Enter Password"
+                    name="psw"
+                    required
+                    type="password" />
+                </Box>
+              </Stack>
+              <Row>
+                <Box>
+                  <Button
+                    variant="solid"
+                    color="primary"
+                    size="medium"
+                    text="Login"
+                    onClick={this.loginHandler} />
+                </Box>
+                <Box>
+                  <Button
+                    variant="outline"
+                    color="primary"
+                    size="medium"
+                    text="Register"
+                    onClick={this.registerHandler} />
+                </Box>
+              </Row>
+              <Box color="red" padding="small">
+                {error_message !== "" && <p>{error_message}</p>}
               </Box>
             </Stack>
-            <Row>
-              <Box>
-                <Button
-                  variant="solid"
-                  color="primary"
-                  size="medium"
-                  text="Login"
-                  onClick={this.loginHandler}
-                />
-              </Box>
-              <Box>
-                <Button
-                  variant="outline"
-                  color="primary"
-                  size="medium"
-                  text="Register"
-                  onClick={this.registerHandler}
-                />
-              </Box>
-            </Row>
-            <Box color="red" padding="small">
-              {error_message !== "" && <p>{error_message}</p>}
-            </Box>
-          </Stack>
-        </Box>
+          </Box>
+        </>
       );
     }
   }

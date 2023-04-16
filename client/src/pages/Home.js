@@ -1,19 +1,9 @@
-import React from "react";
-import axios from "axios";
-import { create_room, get_rooms, get_room, favorites } from "../api/rooms";
-import { get_user_from_token } from "../api/auth";
-import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import Chip from "@material-ui/core/Chip";
-import {
-  Box,
-  Stack,
-  Row,
-  Button,
-  defaultTheme,
-  fontSizes,
-} from "luxor-component-library";
+import axios from "axios";
+import React from "react";
 import { Redirect } from "react-router-dom";
+import { get_user_from_token } from "../api/auth";
+import { create_room, favorites, get_room, get_rooms } from "../api/rooms";
 
 class Home extends React.Component {
   constructor(props) {
@@ -191,118 +181,99 @@ class Home extends React.Component {
   }
 
   render() {
-    const input_text_style = {
-      padding: "10px",
-      paddingLeft: "25px",
-      paddingRight: "25px",
-      width: "400px",
-      borderRadius: "3em",
-      outline: "none",
-      border: `2px solid ${defaultTheme.palette.secondary.light}`,
-      fontWeight: 400,
-      fontSize: fontSizes.medium,
-      fontFamily: defaultTheme.typography.primaryFontFamily,
-      color: defaultTheme.palette.grey[400],
-    };
+    const input_text_style = "px-10 py-10 pl-25 pr-25 w-400 rounded-full outline-none border-2 border-secondary-light font-medium text-medium text-primaryFontFamily text-grey-400";
     const { rooms, roomNav, user } = this.state;
     if (roomNav && roomNav !== "None") {
       return <Redirect push to={"/dashboard/" + roomNav} />;
     } else {
       return (
-        <Box
-          padding="small"
-          paddingY="xlarge"
-          style={{
-            height: "100vh",
-          }}
-          backgroundColor={defaultTheme.palette.grey[100]}
-          color={defaultTheme.palette.common.black}
-          textAlign="center"
+        <div
+          className="p-4 py-16 h-screen bg-grey-100 text-black text-center"
         >
-          <Stack
-            space="large"
-            padding="medium"
-            roundedCorners
-            marginX="xxxlarge"
+          <div
+            className="space-y-4 p-8 rounded-lg mx-auto max-w-4xl bg-white"
           >
-            <Box padding="medium">
+            <div className="p-8">
               <h1>Welcome Home: {this.state.currentUser}</h1>
-            </Box>
-            <Row
-              space="none"
-              width="50%"
-              justifyContent="center"
-              alignItems="center"
-              textAlign="center"
+            </div>
+            <div
+              className="flex justify-center items-center text-center mx-auto"
               style={{ margin: "auto" }}
             >
-              <Box>
+              <div>
                 <input
                   id="messageText"
-                  style={input_text_style}
+                  className={input_text_style}
                   value={this.state.new_room_name}
                   onChange={this.onInputChange}
                   onKeyUp={(e) => this.onEnterHandler(e)}
                   autoComplete="off"
                 />
-              </Box>
-              <Box>
-                <Button
-                  variant="outline"
-                  size="medium"
-                  color="secondary"
-                  text="Create Room"
+              </div>
+              <div>
+                <button
+                  className="border-2 border-secondary-light rounded-full px-4 py-2 text-medium text-secondary"
                   onClick={(e) => this.startNewRoomClick(e)}
-                />
-              </Box>
-            </Row>
-            <Box>
+                >
+                  Create Room
+                </button>
+              </div>
+            </div>
+            <div>
               <h1>Rooms</h1>
-              <Box
-                textAlign="center"
-                padding="small"
-                style={{ justifyContent: "center", height: "300px" }}
+              <div
+                className="text-center p-4 justify-center h-72"
+                style={{ justifyContent: "center" }}
               >
                 {rooms.map((room, index) => {
                   if (user.favorites.includes(room.room_name)) {
                     return (
-                      <Box margin="small">
-                        <Chip
-                          icon={FavoriteIcon}
+                      <div className="m-4">
+                        <div
+                          className="flex justify-between items-center border-2 border-secondary-light rounded-full px-4 py-2"
                           onClick={(e) => this.handleRoomClick(e)}
-                          label={room.room_name}
                           id={room.room_name}
                           key={index}
-                          onDelete={(e) =>
-                            this.removeFavorite(e, room.room_name)
-                          }
-                          deleteIcon={<FavoriteIcon />}
-                        />
-                      </Box>
+                        >
+                          <div className="flex items-center">
+                            <FavoriteIcon />
+                            <p className="ml-2">{room.room_name}</p>
+                          </div>
+                          <button
+                            className="text-secondary"
+                            onClick={(e) =>
+                              this.removeFavorite(e, room.room_name)
+                            }
+                          >
+                            X
+                          </button>
+                        </div>
+                      </div>
                     );
                   } else {
                     return (
-                      <Box margin="20px">
-                        <Chip
-                          icon={FavoriteBorderIcon}
+                      <div className="m-4">
+                        <div
+                          className="border-2 border-secondary-light rounded-full px-4 py-2"
                           onClick={(e) => this.handleRoomClick(e)}
-                          label={room.room_name}
                           id={room.room_name}
                           key={index}
-                          onDelete={(e) => this.addFavorite(e, room.room_name)}
-                          deleteIcon={<FavoriteBorderIcon />}
-                        />
-                      </Box>
+                        >
+                          {room.room_name}
+                        </div>
+                      </div>
                     );
                   }
                 })}
-              </Box>
-            </Box>
-          </Stack>
-        </Box>
+              </div>
+            </div>
+          </div>
+        </div>
       );
     }
   }
+
+
 }
 
 export default Home;

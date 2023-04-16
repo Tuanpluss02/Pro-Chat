@@ -1,13 +1,7 @@
-import axios from 'axios';
-import {
-  Box, Button,
-  defaultTheme,
-  fontSizes, Row, Stack
-} from "luxor-component-library";
+import axios from "axios";
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { login, register } from '../api/auth';
-
+import { login, register } from "../api/auth";
 
 class Login extends React.Component {
   constructor() {
@@ -50,7 +44,7 @@ class Login extends React.Component {
     let config = {
       headers: {
         "content-type": "application/x-www-form-urlencoded;charset=utf-8",
-        "accept": "application/json",
+        accept: "application/json",
         "Access-Control-Allow-Origin": "*",
       },
     };
@@ -73,9 +67,6 @@ class Login extends React.Component {
       });
   }
 
-
-
-
   registerHandler(e) {
     async function signupRequest(username, password) {
       try {
@@ -87,8 +78,8 @@ class Login extends React.Component {
           },
           {
             headers: {
-              'Content-Type': 'application/json',
-              accept: 'application/json',
+              "Content-Type": "application/json",
+              accept: "application/json",
             },
           }
         );
@@ -101,97 +92,65 @@ class Login extends React.Component {
     signupRequest(this.state.username, this.state.password);
   }
 
-
   render() {
-    const input_text_style = {
-      padding: "10px",
-      paddingLeft: "25px",
-      paddingRight: "25px",
-      width: "400px",
-      borderRadius: "3em",
-      outline: "none",
-      border: `2px solid ${defaultTheme.palette.primary.main}`,
-      fontWeight: 400,
-      fontSize: fontSizes.medium,
-      fontFamily: defaultTheme.typography.primaryFontFamily,
-      color: defaultTheme.palette.grey[400],
-    };
+    const input_text_style =
+      "px-10 py-2 w-96 rounded-full outline-none border-2 border-primary font-medium text-medium text-grey-400";
     const { isLoggedIn, error_message } = this.state;
     if (isLoggedIn) {
       return <Redirect push to="" />;
     } else {
       return (
-        <><div className="ml-10 text-yellow-300">thisssss</div>
-          <Box
-            padding="large"
-            height="720px"
-            backgroundColor={defaultTheme.palette.grey[100]}
-            textAlign="center"
-            style={{
-              height: "100vh",
-            }}
-          >
-            <Stack>
-              <Box
-                style={{ fontSize: "2rem" }}
-                color={defaultTheme.palette.secondary.light}
-                paddingBottom="large"
-              >
-                <span>
-                  <h1 style={{ color: defaultTheme.palette.secondary.light }}>
-                    Minimal
-                  </h1>
-                  <h1 style={{ color: defaultTheme.palette.primary.main }}>
-                    Chat.
-                  </h1>
-                </span>
-              </Box>
-              <Stack space="medium" padding="medium">
-                <Box>
+        <>
+          <div className="p-16 h-screen bg-grey-100 text-center">
+            <div className="space-y-8">
+              <div className="text-2xl font-bold text-secondary-light">
+                <h1 className="text-secondary-light">Minimal</h1>
+                <h1 className="text-primary-main">Chat.</h1>
+              </div>
+              <div className="space-y-4">
+                <div>
                   <input
-                    style={input_text_style}
+                    className={input_text_style}
                     value={this.state.username}
                     onChange={(e) => this.usernameChange(e)}
                     autoComplete="off"
                     placeholder="Enter Username"
                     name="uname"
-                    required />
-                </Box>
-                <Box>
+                    required
+                  />
+                </div>
+                <div>
                   <input
-                    style={input_text_style}
+                    className={input_text_style}
                     value={this.state.password}
                     onChange={(e) => this.passwordChange(e)}
                     autoComplete="off"
                     placeholder="Enter Password"
                     name="psw"
+                    type="password"
                     required
-                    type="password" />
-                </Box>
-              </Stack>
-              <Row>
-                <Box>
-                  <Button
-                    variant="solid"
-                    color="primary"
-                    size="medium"
-                    text="Login"
-                    onClick={this.loginHandler} />
-                </Box>
-                <Box>
-                  <Button
-                    variant="outline"
-                    color="primary"
-                    size="medium"
-                    text="Register"
-                    onClick={this.registerHandler} />
-                </Box>
-              </Row>
-              <Box color="red" padding="small">
-                {error_message !== "" && <p>{error_message}</p>}
-              </Box>
-            </Stack>
-          </Box>
+                  />
+                </div>
+                <div>
+                  <button
+                    className="px-10 py-2 rounded-full bg-stone-700 text-red-400 font-medium text-medium"
+                    onClick={(e) => this.loginHandler(e)}
+                  >
+                    Sign In
+                  </button>
+                </div>
+                <div>
+                  <button
+                    className="px-10 py-2 rounded-full bg-stone-700 text-red-400 font-medium text-medium"
+                    onClick={(e) => this.registerHandler(e)}
+                  >
+                    Register
+                  </button>
+                </div>
+                <div className="text-red-600">{error_message}</div>
+              </div>
+            </div>
+          </div>
         </>
       );
     }

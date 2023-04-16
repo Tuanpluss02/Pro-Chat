@@ -1,6 +1,6 @@
+import { Box, defaultTheme } from "luxor-component-library";
 import React from "react";
 import { NavLink } from "react-router-dom";
-import { Box, defaultTheme } from "luxor-component-library";
 
 class NavBar extends React.Component {
   render() {
@@ -23,16 +23,6 @@ class NavBar extends React.Component {
             to="/"
           >
             Home
-          </NavLink>
-          <NavLink
-            style={{
-              textDecoration: "none",
-              color: defaultTheme.palette.common.white,
-              marginLeft: "30px",
-            }}
-            to="/favorites"
-          >
-            Favorites
           </NavLink>
           <NavLink
             style={{

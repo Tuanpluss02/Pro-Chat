@@ -1,15 +1,7 @@
-import React from "react";
-import {
-  Box,
-  Stack,
-  Row,
-  fontSizes,
-  defaultTheme,
-} from "luxor-component-library";
-import { get_user_from_token, upload_profile_pic } from "../api/auth";
-import axios from "axios";
 import AWS from "aws-sdk";
-import Avatar from "@material-ui/core/Avatar";
+import axios from "axios";
+import React from "react";
+import { get_user_from_token, upload_profile_pic } from "../api/auth";
 
 class Profile extends React.Component {
   constructor(props) {
@@ -123,88 +115,62 @@ class Profile extends React.Component {
   }
 
   render() {
-    const input_text_style = {
-      padding: "10px",
-      paddingLeft: "25px",
-      paddingRight: "25px",
-      width: "400px",
-      borderRadius: "3em",
-      outline: "none",
-      border: `2px solid ${defaultTheme.palette.error.main}`,
-      fontWeight: 400,
-      fontSize: fontSizes.medium,
-      fontFamily: defaultTheme.typography.primaryFontFamily,
-      color: defaultTheme.palette.grey[400],
-    };
+    const input_text_style = "px-10 py-10 pl-25 pr-25 w-400 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
     const { isLoaded, user } = this.state;
 
     if (!isLoaded) {
-      return <Box>Loading...</Box>;
+      return <div>Loading...</div>;
     } else {
       return (
-        <Box
-          margin="none"
-          padding="large"
-          height="100vh"
-          backgroundColor={defaultTheme.palette.grey[200]}
-        >
-          <Row>
-            <Box padding="medium">
-              <Stack space="medium" textAlign="center">
-                <Box
-                  styles={{
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                  }}
-                >
-                  <Avatar
-                    styles={{ margin: "0" }}
-                    src={user.profile_pic_img_src}
-                    alt={user.username}
-                  />
-                  <h1>{user.username}'s Profile</h1>
-                </Box>
+        <div className="flex">
+          <div className="p-4">
+            <div className="space-y-4 text-center">
+              <div className="flex items-center justify-center">
+                <img
+                  className="m-0"
+                  src={user.profile_pic_img_src}
+                  alt={user.username}
+                />
+                <h1>{user.username}'s Profile</h1>
+              </div>
 
-                <Box>
-                  <input
-                    type="file"
-                    id="fileUpload"
-                    accept="image/png, image/jpeg, image/jpg"
-                    onChange={this.imageUpload}
-                  />
-                </Box>
-              </Stack>
-            </Box>
-            <Box>
-              <Stack space="medium">
-                <Box>
-                  <input
-                    style={input_text_style}
-                    value={this.state.new_user.username}
-                    placeholder="New Username"
-                    onChange={this.onUsernameChange}
-                    autoComplete="off"
-                  />
-                </Box>
-                <Box>
-                  <input
-                    style={input_text_style}
-                    value={this.state.new_user.password}
-                    onChange={this.onPasswordChange}
-                    onKeyUp={(e) => this.onEnterHandler(e)}
-                    type="password"
-                    placeholder="New Password"
-                    autoComplete="off"
-                  />
-                </Box>
-              </Stack>
-            </Box>
-          </Row>
-        </Box>
+              <div>
+                <input
+                  type="file"
+                  id="fileUpload"
+                  accept="image/png, image/jpeg, image/jpg"
+                  onChange={this.imageUpload}
+                />
+              </div>
+            </div>
+          </div>
+          <div className="space-y-4">
+            <div>
+              <input
+                className={input_text_style}
+                value={this.state.new_user.username}
+                placeholder="New Username"
+                onChange={this.onUsernameChange}
+                autoComplete="off"
+              />
+            </div>
+            <div>
+              <input
+                className={input_text_style}
+                value={this.state.new_user.password}
+                onChange={this.onPasswordChange}
+                onKeyUp={(e) => this.onEnterHandler(e)}
+                type="password"
+                placeholder="New Password"
+                autoComplete="off"
+              />
+            </div>
+          </div>
+        </div>
       );
     }
   }
+
 }
 
 export default Profile;

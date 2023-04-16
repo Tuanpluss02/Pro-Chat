@@ -1,14 +1,16 @@
-import React from "react";
-import { Box, Stack, Row, defaultTheme } from "luxor-component-library";
-import { ChatModule } from "../components/ChatModule";
-import { get_user_from_token } from "../api/auth";
+
+
 import axios from "axios";
+import React from "react";
+import { get_user_from_token } from "../api/auth";
+import { ChatModule } from "../components/ChatModule";
 
 class Dashboard extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       currentUser: null,
+      isLoaded: false
     };
   }
 
@@ -38,28 +40,23 @@ class Dashboard extends React.Component {
     ];
     const { isLoaded, currentUser } = this.state;
     if (!isLoaded) {
-      return <Box>Loading...</Box>;
+      return <div>Loading...</div>;
     } else {
       return (
-        <Box
-          margin="none"
-          padding="large"
-          paddingBottom="none"
-          height="100vh"
-          backgroundColor={defaultTheme.palette.secondary.light}
-        >
-          <Row>
-            <Stack>
-              <Box textAlign="center">
-                <h1>Welcome to the {decodeURIComponent(room)} room</h1>
-                <ChatModule room_name={room} user={currentUser} />
-              </Box>
-            </Stack>
-          </Row>
-        </Box>
+        <div className="flex flex-col h-screen">
+          <div className="flex items-center justify-center bg-blue-200 h-16">
+            <h1 className="text-3xl font-bold">Welcome to the {decodeURIComponent(room)} room</h1>
+          </div>
+          <div className="flex-grow bg-gray-100">
+            <ChatModule room_name={room} user={currentUser} />
+          </div>
+        </div>
       );
     }
   }
+
+
 }
 
 export default Dashboard;
+

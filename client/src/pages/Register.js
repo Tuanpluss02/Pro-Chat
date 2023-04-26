@@ -40,7 +40,7 @@ const Register = () => {
         <div className="p-16 h-screen bg-black text-center flex justify-end">
           <div className="space-y-8">
             <div className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-blue-200 bg-clip-text">
-              <h1 className="text-transparent">Sign-up</h1>
+              <h1 className="text-transparent h-20">Sign-up</h1>
             </div>
             <div className="space-y-4">
               <div>

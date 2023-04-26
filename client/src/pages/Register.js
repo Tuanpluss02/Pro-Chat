@@ -59,13 +59,13 @@ const Register = () => {
               <h1 class="text-lg font-medium mb-1 text-white text-left">Email</h1>
                 <input
                   className={input_text_style}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  autoComplete="off"
+                  // value={password}
+                  // onChange={(e) => setPassword(e.target.value)}
+                  // type="password"
+                  // autoComplete="off"
+                  // name="psw"
+                  // required
                   placeholder="Enter Email"
-                  name="psw"
-                  required
                 />
               </div>
               <div>
@@ -85,13 +85,13 @@ const Register = () => {
               <h1 class="text-lg font-medium mb-1 text-white text-left">Confirm your password</h1>
                 <input
                   className={input_text_style}
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  type="password"
-                  autoComplete="off"
-                  placeholder="Enter Password"
-                  name="psw"
-                  required
+                  // value={password}
+                  // onChange={(e) => setPassword(e.target.value)}
+                  // type="password"
+                  // autoComplete="off"
+                  // name="psw"
+                  // required
+                  placeholder="Re-enter Password"
                 />
               </div>
               <div>

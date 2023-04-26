@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Redirect } from "react-router-dom";
-import { login, register } from "../api/auth";
+import { login} from "../api/auth";
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -40,46 +41,23 @@ const Login = () => {
         setErrorMessage("error with logging in, check console");
       });
   };
-
-  const registerHandler = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        register,
-        {
-          username: username,
-          password: password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            accept: "application/json",
-          },
-        }
-      );
-      console.log(response.data);
-      if (response.status !== 200) return null;
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
   const input_text_style =
-    "px-10 py-2 w-96 rounded-full outline-none border-2 border-primary font-medium text-medium text-grey-400";
+    "px-10 py-2 w-96 rounded-md outline-none border-2 border-primary font-medium text-medium text-grey-400";
 
   if (isLoggedIn) {
     return <Redirect push to="" />;
   } else {
     return (
       <>
-        <div className="p-16 h-screen bg-grey-100 text-center">
+        <div className="p-16 h-screen bg-black text-center flex justify-end">
           <div className="space-y-8">
-            <div className="text-2xl font-bold text-secondary-light">
-              <h1 className="text-secondary-light">Minimal</h1>
-              <h1 className="text-primary-main">Chat.</h1>
+            <div className="text-4xl font-bold bg-gradient-to-r from-purple-400 to-blue-200 bg-clip-text">
+              <h1 className="text-transparent">Pro Chat</h1>
+              <h1 className="text-transparent">Login</h1>
             </div>
             <div className="space-y-4">
               <div>
+              <h1 class="text-lg font-medium mb-1 text-white text-left">Username</h1>
                 <input
                   className={input_text_style}
                   value={username}
@@ -91,6 +69,7 @@ const Login = () => {
                 />
               </div>
               <div>
+              <h1 class="text-lg font-medium mb-1 text-white text-left">Password</h1>
                 <input
                   className={input_text_style}
                   value={password}
@@ -104,20 +83,15 @@ const Login = () => {
               </div>
               <div>
                 <button
-                  className="px-10 py-2 w-96 rounded-full bg-primary-main text-white font-medium text-medium"
+                  className="px-10 py-2 w-36 rounded-full bg-emerald-400 text-white font-medium text-medium"
                   onClick={loginHandler}
                 >
                   Login
                 </button>
               </div>
-              <div>
-                <button
-                  className="px-10 py-2 w-96 rounded-full bg-secondary-light text-white font-medium text-medium"
-                  onClick={registerHandler}
-                >
-                  Register
-                </button>
-              </div>
+              <h1 class="text-lg font-medium mb-1 text-white text-center">
+                Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
+              </h1>
               <div>
                 <p className="text-red-500">{errorMessage}</p>
               </div>
@@ -129,4 +103,3 @@ const Login = () => {
   }
 };
 export default Login;
-

@@ -6,6 +6,7 @@ import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
+import Register from "./pages/Register";
 
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
@@ -15,6 +16,7 @@ function App() {
       <div className="app">
         <NavBar />
         <Switch>
+          <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <ProtectedRoute path="/dashboard" page={Dashboard} />
 

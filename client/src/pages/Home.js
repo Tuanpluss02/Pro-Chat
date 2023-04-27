@@ -227,7 +227,7 @@ class Home extends React.Component {
 
             {/* One to display rooms has width = 75% */}
 
-            <div className="w-1/3">
+            <div className="w-1/4">
             <div>
                 <h1>Existed Rooms</h1>
                 <div

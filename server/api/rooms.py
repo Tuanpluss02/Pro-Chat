@@ -33,7 +33,8 @@ async def add_user_to_room_members(
     """
     Add a user to the room's members
     """
-    row = await add_user_to_room(current_user.username, room_name)
+    # print(type(current_user))
+    row = await add_user_to_room(current_user['username'], room_name) # type: ignore
     return row
 
 

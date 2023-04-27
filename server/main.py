@@ -1,73 +1,29 @@
 from fastapi import FastAPI, WebSocket
-
-from controllers import get_room, remove_user_from_room, add_user_to_room, upload_message_to_room
-from models import User
-from mongodb import close_mongo_connection
 from starlette.middleware.cors import CORSMiddleware
-from api import router as api_router
-from notifier import ConnectionManager
 from starlette.websockets import WebSocketState
 import logging
 import json
 
+from controllers import get_room, remove_user_from_room, add_user_to_room, upload_message_to_room
+from models import User
+from mongodb import close_mongo_connection
+from api import router as api_router
+from notifier import ConnectionManager
+
 app = FastAPI()
 logger = logging.getLogger(__name__)
 
-# origins = [
-#     "http://localhost.tiangolo.com",
-#     "https://localhost.tiangolo.com",
-#     "http://localhost",
-#     "http://localhost:3000",
-#     "http://localhost:3000",
-# ]
 origins = ["*"]
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,  # can alter with time
+    allow_origins=origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
-# @app.on_event("startup")
-# async def startup_event():
-#     await connect_to_mongo()
-#     client = await get_nosql_db()
-#     db = client[MONGODB_DB_NAME]
-    # try:
-    #     db.create_collection("users")
-    # except pymongo.errors.CollectionInvalid as e:
-    #     logging.warning(e)
-    #     pass
-    # try:
-    #     db.create_collection("rooms")
-    # except pymongo.errors.CollectionInvalid as e:
-    #     logging.warning(e)
-    #     pass
-    # try:
-    #     db.create_collection("messages")
-    # except pymongo.errors.CollectionInvalid as e:
-    #     logging.warning(e)
-    #     pass
-    # try:
-    #     user_collection = db.users
-    #     room_collection = db.rooms
-    #     user_collection.create_index("username", name="username", unique=True)
-    #     room_collection.create_index("room_name", name="room_name", unique=True)
-    # except:
-    #     print("Index already exists")
-    #     pass
-
-
-@app.on_event("shutdown")
-async def shutdown_event():
-    await close_mongo_connection()
-
-
 manager = ConnectionManager()
-
 
 @app.websocket("/ws/{room_name}/{user_name}")
 async def websocket_endpoint(websocket: WebSocket, room_name, user_name):
@@ -121,3 +77,7 @@ async def websocket_endpoint(websocket: WebSocket, room_name, user_name):
 
 
 app.include_router(api_router, prefix="/api")
+
+@app.on_event("shutdown")
+async def shutdown_event():
+    await close_mongo_connection()

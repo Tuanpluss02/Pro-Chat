@@ -16,7 +16,7 @@ from utils import format_ids
 
 logger = logging.getLogger(__name__)
 pwd_context = CryptContext(schemes=["bcrypt"], default="bcrypt")
-oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/token")
+oauth2_scheme = OAuth2PasswordBearer(tokenUrl="api/token")
 
 
 def verify_password(plain_password_w_salt, hashed_password):
@@ -96,7 +96,7 @@ async def get_user(name) -> UserInDB:
     row = users_collection.find_one({"username": name})
     if row is not None:
         row = format_ids(row)
-        return row
+        return row # type: ignore
     else:
         return UserInDB(**{})
 
@@ -141,4 +141,3 @@ async def remove_favorite_from_user(username, favorite):
     users_collection.update_one({"username": user_obj["username"]}, {"$pull": {"favorites": favorite}})
     user = await get_user(username)
     return user
-

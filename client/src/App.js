@@ -14,7 +14,8 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <NavBar />
+      {window.location.pathname !== "/login" &&
+        window.location.pathname !== "/register" && <NavBar />}
         <Switch>
           <Route path="/login" component={Login} />
           <Route path="/register" component={Register} />

@@ -215,7 +215,7 @@ class ChatModule extends React.Component {
   }
 
   render() {
-    const input_text_style = "px-10 py-10 pl-25 pr-25 w-600 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
+    const input_text_style = "px-10 py-10 pl-25 pr-25 w-1200 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
     const {
       isLoaded,
       messages,
@@ -233,7 +233,7 @@ class ChatModule extends React.Component {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
       return (
-        <div className="w-full">
+        <div className="w-2/3">
           <div className="w-800px mx-auto">
             <div
               className="p-4 rounded-lg"
@@ -248,10 +248,29 @@ class ChatModule extends React.Component {
                 {messages.map((message, index) => {
                   return (
                     <div
-                      className={`flex flex-row ${message.user.username === this.state.currentUser
-                        ? "flex-row-reverse float-right text-right mr-auto"
-                        : "flex-row float-left text-left ml-auto"
-                        }`}
+                      style={{
+                        display: "flex",
+                        flexDirection:
+                          message.user.username === this.state.currentUser
+                            ? "row"
+                            : "row-reverse",
+                        float:
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left",
+                        textAlign:
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left",
+                        marginLeft:
+                          message.user.username === this.state.currentUser
+                            ? "400px"
+                            : "auto",
+                        marginRight:
+                          message.user.username === this.state.currentUser
+                            ? "auto"
+                            : "400px",
+                      }}
                     >
                       <div
                         className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
@@ -261,15 +280,33 @@ class ChatModule extends React.Component {
                       >
                         {message.content}
                       </div>
+                      <div
+                        padding="10px"
+                        style = {{
+                          float:
+                            message.user.username === this.state.currentUser
+                              ? "right"
+                              : "left",
+                        }}
+                        textAlign={
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left"
+                        }
+                      >
+                        {message.user.username}
+                    </div>
                     </div>
                   );
                 })}
               </div>
             </div>
-            <div className="w-full flex justify-between items-center">
+            <div 
+              className="p-4 rounded-lg"
+            >
               <input
                 type="text"
-                className={input_text_style}
+                className = "px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400"
                 placeholder="Type a message..."
                 value={this.state.message_draft}
                 onChange={(event) =>

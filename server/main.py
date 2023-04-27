@@ -81,3 +81,4 @@ app.include_router(api_router, prefix="/api")
 @app.on_event("shutdown")
 async def shutdown_event():
     await close_mongo_connection()
+

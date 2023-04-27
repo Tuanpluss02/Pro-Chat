@@ -214,8 +214,28 @@ class ChatModule extends React.Component {
     }
   }
 
+  // sendMessage(event) {
+  //   event.preventDefault();
+  //   var input = this.state.message_draft;
+  //   if (input.length > 0) {
+  //     var message_obj = {
+  //       content: input,
+  //       user: { username: this.state.currentUser },
+  //       room_name: this.state.room_name,
+  //     };
+  //     if (client !== null) {
+  //       client.send(JSON.stringify(message_obj));
+  //       this.setState({ message_draft: "" }, this.scrollToBottom);
+  //     } else {
+  //       client = checkWebSocket(this.state.currentUser, this.state.room_name);
+  //       client.send(JSON.stringify(message_obj));
+  //       this.setState({ message_draft: "" }, this.scrollToBottom);
+  //     }
+  //   }
+  // };
+
+
   render() {
-    const input_text_style = "px-10 py-10 pl-25 pr-25 w-1200 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
     const {
       isLoaded,
       messages,
@@ -274,8 +294,8 @@ class ChatModule extends React.Component {
                     >
                       <div
                         className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
-                          ? "bg-red-500"
-                          : ""
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-500 text-white"
                           }`}
                       >
                         {message.content}
@@ -306,7 +326,7 @@ class ChatModule extends React.Component {
             >
               <input
                 type="text"
-                className = "px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400"
+                className = "px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
                 placeholder="Type a message..."
                 value={this.state.message_draft}
                 onChange={(event) =>
@@ -315,13 +335,14 @@ class ChatModule extends React.Component {
                 onKeyDown={(event) => {
                   if (event.key === "Enter") {
                     event.preventDefault();
-                    this.sendMessage();
+                    this.onEnterHandler(event);
                   }
                 }}
               />
               <button
-                className="px-4 py-2 rounded-full bg-red-500 text-white font-medium"
-                onClick={() => this.sendMessage()}
+                className="px-4 py-2 rounded-lg bg-blue-500 text-white font-medium"
+                onClick={(event) => this.onClickHandler(event)
+                }
               >
                 Send
               </button>

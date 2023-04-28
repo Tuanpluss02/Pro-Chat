@@ -85,12 +85,6 @@ const Register = () => {
               <h1 class="text-lg font-medium mb-1 text-white text-left">Confirm your password</h1>
                 <input
                   className={input_text_style}
-                  // value={password}
-                  // onChange={(e) => setPassword(e.target.value)}
-                  // type="password"
-                  // autoComplete="off"
-                  // name="psw"
-                  // required
                   placeholder="Re-enter Password"
                 />
               </div>
@@ -101,7 +95,7 @@ const Register = () => {
                 >
                   Register
                 </button>
-                <h1 class="text-lg font-medium mb-1 text-white text-center">
+                <h1 class="px-10 text-lg font-medium mb-1 text-white text-center">
                   Already have an account?  <Link to="/login" className="text-blue-500">Login</Link>
                 </h1>
               </div>

@@ -205,7 +205,7 @@ class Home extends React.Component {
                   <div>
                     <input
                       id="messageText"
-                      className="px-5 py-5 w-800 border-2 border-black"
+                      className="px-5 py-5 border-2 border-black rounded-md w-full"
                       value={this.state.new_room_name}
                       onChange={this.onInputChange}
                       onKeyUp={(e) => this.onEnterHandler(e)}
@@ -215,7 +215,7 @@ class Home extends React.Component {
                 </div>
                 <div>
                     <button
-                      className="border-2 border-secondary-light rounded-full px-4 py-2 text-medium text-secondary"
+                      className="border-2 border-secondary-light bg-blue-400 rounded-full px-4 py-2 text-medium text-secondary"
                       onClick={(e) => this.startNewRoomClick(e)}
                     >
                       Create Room
@@ -230,7 +230,7 @@ class Home extends React.Component {
             <div>
                 <h1>Existed Rooms</h1>
                 <div
-                  className="text-center p-4 justify-center h-72"
+                  className="flex-col text-center p-4 justify-center h-72"
                   style={{ justifyContent: "center" }}
                 >
                   {rooms.map((room, index) => {
@@ -262,7 +262,7 @@ class Home extends React.Component {
                       return (
                         <div className="m-4">
                           <div
-                            className="border-2 border-secondary-light rounded-full px-4 py-2"
+                            className="flex flex-col order-2 border-secondary-light rounded-full px-4 py-2"
                             onClick={(e) => this.handleRoomClick(e)}
                             id={room.room_name}
                             key={index}

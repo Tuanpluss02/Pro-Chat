@@ -102,7 +102,7 @@ class ChatModule extends React.Component {
   componentDidMount() {
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 5000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
@@ -326,7 +326,7 @@ class ChatModule extends React.Component {
             >
               <input
                 type="text"
-                className = "px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
+                className = "px-5 py-5 pl-10 pr-10 mr-20 w-1/2 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
                 placeholder="Type a message..."
                 value={this.state.message_draft}
                 onChange={(event) =>
@@ -356,4 +356,3 @@ class ChatModule extends React.Component {
 
 }
 export { ChatModule };
-

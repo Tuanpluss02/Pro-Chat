@@ -55,7 +55,7 @@ const Register = () => {
                   required
                 />
               </div>
-              <div>
+              {/* <div>
               <h1 class="text-lg font-medium mb-1 text-white text-left">Email</h1>
                 <input
                   className={input_text_style}
@@ -67,7 +67,7 @@ const Register = () => {
                   // required
                   placeholder="Enter Email"
                 />
-              </div>
+              </div> */}
               <div>
               <h1 class="text-lg font-medium mb-1 text-white text-left">Password</h1>
                 <input
@@ -99,7 +99,7 @@ const Register = () => {
                   className="px-10 py-2 w-60 rounded-md bg-emerald-400 text-white font-medium text-medium"
                   onClick={registerHandler}
                 >
-                  Start your Journey
+                  Register
                 </button>
                 <h1 class="text-lg font-medium mb-1 text-white text-center">
                   Already have an account?  <Link to="/login" className="text-blue-500">Login</Link>
@@ -112,4 +112,3 @@ const Register = () => {
     );
   }
 export default Register;
-

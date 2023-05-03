@@ -1,8 +1,7 @@
 import axios from "axios";
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { Redirect } from "react-router-dom";
-import { login} from "../api/auth";
+import { Redirect, Link } from "react-router-dom";
+import { login } from "../api/auth";
 
 const Login = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);

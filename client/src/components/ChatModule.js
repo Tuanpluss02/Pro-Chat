@@ -214,8 +214,28 @@ class ChatModule extends React.Component {
     }
   }
 
+  // sendMessage(event) {
+  //   event.preventDefault();
+  //   var input = this.state.message_draft;
+  //   if (input.length > 0) {
+  //     var message_obj = {
+  //       content: input,
+  //       user: { username: this.state.currentUser },
+  //       room_name: this.state.room_name,
+  //     };
+  //     if (client !== null) {
+  //       client.send(JSON.stringify(message_obj));
+  //       this.setState({ message_draft: "" }, this.scrollToBottom);
+  //     } else {
+  //       client = checkWebSocket(this.state.currentUser, this.state.room_name);
+  //       client.send(JSON.stringify(message_obj));
+  //       this.setState({ message_draft: "" }, this.scrollToBottom);
+  //     }
+  //   }
+  // };
+
+
   render() {
-    const input_text_style = "px-10 py-10 pl-25 pr-25 w-600 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
     const {
       isLoaded,
       messages,
@@ -233,7 +253,7 @@ class ChatModule extends React.Component {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
       return (
-        <div className="w-full">
+        <div className="w-2/3">
           <div className="w-800px mx-auto">
             <div
               className="p-4 rounded-lg"
@@ -248,28 +268,65 @@ class ChatModule extends React.Component {
                 {messages.map((message, index) => {
                   return (
                     <div
-                      className={`flex flex-row ${message.user.username === this.state.currentUser
-                        ? "flex-row-reverse float-right text-right mr-auto"
-                        : "flex-row float-left text-left ml-auto"
-                        }`}
+                      style={{
+                        display: "flex",
+                        flexDirection:
+                          message.user.username === this.state.currentUser
+                            ? "row"
+                            : "row-reverse",
+                        float:
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left",
+                        textAlign:
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left",
+                        marginLeft:
+                          message.user.username === this.state.currentUser
+                            ? "400px"
+                            : "auto",
+                        marginRight:
+                          message.user.username === this.state.currentUser
+                            ? "auto"
+                            : "400px",
+                      }}
                     >
                       <div
                         className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
-                          ? "bg-red-500"
-                          : ""
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-500 text-white"
                           }`}
                       >
                         {message.content}
                       </div>
+                      <div
+                        padding="10px"
+                        style = {{
+                          float:
+                            message.user.username === this.state.currentUser
+                              ? "right"
+                              : "left",
+                        }}
+                        textAlign={
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left"
+                        }
+                      >
+                        {message.user.username}
+                    </div>
                     </div>
                   );
                 })}
               </div>
             </div>
-            <div className="w-full flex justify-between items-center">
+            <div 
+              className="p-4 rounded-lg"
+            >
               <input
                 type="text"
-                className={input_text_style}
+                className = "px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
                 placeholder="Type a message..."
                 value={this.state.message_draft}
                 onChange={(event) =>
@@ -278,13 +335,14 @@ class ChatModule extends React.Component {
                 onKeyDown={(event) => {
                   if (event.key === "Enter") {
                     event.preventDefault();
-                    this.sendMessage();
+                    this.onEnterHandler(event);
                   }
                 }}
               />
               <button
-                className="px-4 py-2 rounded-full bg-red-500 text-white font-medium"
-                onClick={() => this.sendMessage()}
+                className="px-4 py-2 rounded-lg bg-blue-500 text-white font-medium"
+                onClick={(event) => this.onClickHandler(event)
+                }
               >
                 Send
               </button>

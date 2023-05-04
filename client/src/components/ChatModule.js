@@ -256,7 +256,7 @@ class ChatModule extends React.Component {
             <div
               className="p-4 rounded-lg"
               style={{
-                height: "calc(100vh - 210px)",
+                height: "calc(100vh - 212px)",
                 width: "800px",
                 overflow: "scroll",
               }}

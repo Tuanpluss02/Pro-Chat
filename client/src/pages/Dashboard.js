@@ -1,5 +1,3 @@
-
-
 import axios from "axios";
 import React from "react";
 import { get_user_from_token } from "../api/auth";
@@ -10,7 +8,7 @@ class Dashboard extends React.Component {
     super(props);
     this.state = {
       currentUser: null,
-      isLoaded: false
+      isLoaded: false,
     };
   }
 
@@ -35,17 +33,20 @@ class Dashboard extends React.Component {
   }
 
   render() {
-    const room = window.location.pathname.split("/")[
-      window.location.pathname.split("/").length - 1
-    ];
+    const room =
+      window.location.pathname.split("/")[
+        window.location.pathname.split("/").length - 1
+      ];
     const { isLoaded, currentUser } = this.state;
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return <div className="loader" />;
     } else {
       return (
-        <div className="flex flex-col h-screen">
+        <div className="flex flex-col">
           <div className="flex items-center justify-center bg-blue-200 h-16">
-            <h1 className="text-3xl font-bold">Welcome to the {decodeURIComponent(room)} room</h1>
+            <h1 className="text-3xl font-bold">
+              Welcome to the {decodeURIComponent(room)} room
+            </h1>
           </div>
           <div className="flex-grow bg-gray-100">
             <ChatModule room_name={room} user={currentUser} />
@@ -54,9 +55,6 @@ class Dashboard extends React.Component {
       );
     }
   }
-
-
 }
 
 export default Dashboard;
-

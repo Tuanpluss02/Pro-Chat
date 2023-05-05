@@ -40,9 +40,8 @@ const Login = () => {
         setErrorMessage("error with logging in, check console");
       });
   };
-
   const input_text_style =
-    "px-10 py-2 w-96 rounded-full outline-none border-2 border-primary font-medium text-medium text-grey-400";
+    "px-10 py-2 w-96 rounded-md outline-none border-2 border-primary font-medium text-medium text-grey-400";
 
   if (isLoggedIn) {
     return <Redirect push to="" />;

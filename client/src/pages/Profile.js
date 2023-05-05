@@ -115,11 +115,16 @@ class Profile extends React.Component {
   }
 
   render() {
-    const input_text_style = "px-10 py-10 pl-25 pr-25 w-400 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
+    const input_text_style =
+      "px-10 py-10 pl-25 pr-25 w-400 rounded-full outline-none border-2 border-red-500 font-medium text-md font-primary text-gray-400";
     const { isLoaded, user } = this.state;
 
     if (!isLoaded) {
-      return <div>Loading...</div>;
+      return (
+        <div className="flex items-center justify-center h-screen">
+          <div className="loader" />
+        </div>
+      );
     } else {
       return (
         <div className="flex">
@@ -170,7 +175,6 @@ class Profile extends React.Component {
       );
     }
   }
-
 }
 
 export default Profile;

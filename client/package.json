@@ -9,7 +9,7 @@
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
     "@testing-library/user-event": "^12.6.2",
-    "aws-sdk": "^2.852.0",
+    "aws-sdk": "^2.1366.0",
     "axios": "^0.21.1",
     "emoji-js": "^3.5.0",
     "emoji-picker-react": "^3.4.2",

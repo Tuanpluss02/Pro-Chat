@@ -41,7 +41,7 @@ class Profile extends React.Component {
 
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 2000,
       headers: {
         //"Content-Type": "multipart/form-data",
         "Content-Type": files[0].type,
@@ -64,7 +64,7 @@ class Profile extends React.Component {
   componentDidMount() {
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 5000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,

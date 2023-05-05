@@ -17,7 +17,7 @@ class Dashboard extends React.Component {
   componentDidMount() {
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 5000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,

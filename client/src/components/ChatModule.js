@@ -256,19 +256,18 @@ class ChatModule extends React.Component {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
       return (
-          <div className="flex">
-            <div className="w-2/3 h-full border-blue-500">
+            <div className="w-full h-full border-blue-500">
               <div className="w-full h-full mx-auto">
                 <div
                   className="p-4 rounded-lg"
                   style={{
                     overflow: "scroll",
                     height: "700px",
-                    width: "800px",
+                    width: "w-full",
                   }}
                   id="message-list"
                 >
-                  <div className="space-y-4 w-800px">
+                  <div className="space-y-4 w-full">
                     {messages.map((message, index) => {
                       return (
                         <div
@@ -321,7 +320,7 @@ class ChatModule extends React.Component {
                 >
                   <input
                     type="text"
-                    className="px-5 py-5 pl-10 pr-10 mr-20 w-1/2 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
+                    className="px-5 py-5 pl-10 pr-5 mr-5 w-2/3 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
                     placeholder="Type a message..."
                     value={this.state.message_draft}
                     onChange={(event) => this.setState({ message_draft: event.target.value })}
@@ -340,22 +339,6 @@ class ChatModule extends React.Component {
                 </div>
               </div>
             </div>
-            <div className="w-1/3 h-full">
-              <h1>members</h1>
-              
-              {/* {members.map((member, index) => {
-                return (
-                  <div className="flex flex-row">
-                    <div className="w-1/2">
-                      <h1>{member.username}</h1>
-                    </div>
-                  </div>
-                );
-              } */}
-              
-
-            </div>
-          </div>
       );
     }
   }

@@ -14,7 +14,6 @@ function App() {
   return (
     <BrowserRouter>
       <div className="app">
-        <NavBar />
         <Switch>
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />

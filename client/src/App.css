@@ -40,3 +40,155 @@
     transform: rotate(360deg);
   }
 }
+
+/* SEND BUTTON */
+send {
+  font-family: inherit !important;
+  font-size: inherit !important;
+  background: royalblue !important;
+  color: white !important;
+  padding: 0.7em 1em;
+  padding-left: 0.9em;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 16px !important;
+  overflow: hidden;
+  transition: all 0.2s;
+}
+
+send span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+}
+
+send svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+send:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+}
+
+send:hover svg {
+  transform: translateX(1.2em) rotate(45deg) scale(1.1);
+}
+
+send:hover span {
+  transform: translateX(5em);
+}
+
+send:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
+}
+
+
+/* Input Message */
+.info-panels {
+  --color-input: #000000;
+  --color-border: #848484;
+  --color-border-hover: #1a73e8;
+  --all-transition: all .2s ease-out;
+  --input-focus-opacity: .3;
+}
+
+.input-color-group-one {
+  position: relative;
+}
+
+.input-color {
+  border: 2px solid var(--color-border);
+  border-radius: 80px;
+  background: none;
+  transition: var(--all-transition);
+  -webkit-transition: var(--all-transition);
+  -moz-transition: var(--all-transition);
+  -ms-transition: var(--all-transition);
+  -o-transition: var(--all-transition);
+}
+
+.input-color:focus {
+  color: var(--color-input);
+  outline: none;
+  border: 2px solid var(--color-border-hover);
+}
+
+.input-color:valid {
+  color: var(--color-input);
+  outline: none;
+}
+
+.input-color::-webkit-input-placeholder {
+  color: var(--color-input);
+}
+
+.input-color::-moz-input-placeholder {
+  color: var(--color-input);
+}
+
+.input-color::-ms-input-placeholder {
+  color: var(--color-input);
+}
+
+.input-color:focus::-webkit-input-placeholder, input-color:valid::-webkit-input-placeholder {
+  opacity: var(--input-focus-opacity);
+}
+
+.input-color:focus::-moz-input-placeholder, input-color:valid::-moz-input-placeholder {
+  opacity: var(--input-focus-opacity);
+}
+
+.input-color:focus::-ms-input-placeholder, input-color:valid::-ms-input-placeholder {
+  opacity: var(--input-focus-opacity);
+}
+
+/* Loading animation */
+.loader {
+  display: block;
+  width: 160px;
+  height: 8px;
+  border-radius: 30px;
+  background-color: rgba(0,0,0,0.2);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) ;
+}
+
+.loader::before {
+  content: "";
+  position: absolute;
+  background: #0071e2;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 100%;
+  border-radius: 30px;
+  animation: moving 1s ease-in-out infinite;
+  ;
+}
+
+@keyframes moving {
+  50% {
+    width: 100%;
+  }
+
+  100% {
+    width: 0;
+    right: 0;
+    left: unset;
+  }
+}

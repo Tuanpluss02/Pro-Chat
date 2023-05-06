@@ -186,51 +186,22 @@ class Home extends React.Component {
       return <Redirect push to={"/dashboard/" + roomNav} />;
     } else {
       return (
-        <div
-          className="p-4 py-16 h-screen bg-grey-100 text-black text-center"
-        >
-          <div className="p-8 text-black">
-              <h1>Welcome Home: {this.state.currentUser}</h1>
+        <div className="px-5 py-8 max-h-[100vh] overflow-hidden bg-grey-100 text-black text-center">
+          <div className="pb-8 text-black">
+            <h1>
+              Welcome Home:{" "}
+              <span className="font-semibold">{this.state.currentUser}</span>{" "}
+            </h1>
           </div>
           {/* Divine to 2 section */}
           <div className="flex flex-row w-full">
             {/* One to create room has width = 25% */}
-            <div className="w-1/2">
-              <div
-                className="space-y-4 p-8 rounded-lg bg-white"
-              >
-                <div
-                  className="flex flex-row justify-center items-center"
-                >
-                  <div>
-                    <input
-                      id="messageText"
-                      className="px-5 py-5 w-800 border-2 border-black"
-                      value={this.state.new_room_name}
-                      onChange={this.onInputChange}
-                      onKeyUp={(e) => this.onEnterHandler(e)}
-                      autoComplete="off"
-                    />
-                  </div>
-                </div>
-                <div>
-                    <button
-                      className="border-2 border-secondary-light rounded-full px-4 py-2 text-medium text-secondary"
-                      onClick={(e) => this.startNewRoomClick(e)}
-                    >
-                      Create Room
-                    </button>
-                </div>
-              </div>
-            </div>
-
-            {/* One to display rooms has width = 75% */}
 
             <div className="w-1/3">
-            <div>
-                <h1>Existed Rooms</h1>
+              <div>
+                <h1 className="py-1">Existed Rooms</h1>
                 <div
-                  className="text-center p-4 justify-center h-72"
+                  className="overflow-y-scroll text-center p-4 justify-center max-h-[calc(100vh-108px)]"
                   style={{ justifyContent: "center" }}
                 >
                   {rooms.map((room, index) => {
@@ -260,9 +231,9 @@ class Home extends React.Component {
                       );
                     } else {
                       return (
-                        <div className="m-4">
+                        <div className="overflow-y-scroll m-4">
                           <div
-                            className="border-2 border-secondary-light rounded-full px-4 py-2"
+                            className=" border-2 border-secondary-light rounded-full px-4 py-2"
                             onClick={(e) => this.handleRoomClick(e)}
                             id={room.room_name}
                             key={index}
@@ -276,13 +247,39 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
+
+            {/* Creat */}
+            <div className="w-1/2 ">
+              <div className="space-y-4 p-8 rounded-lg bg-white ">
+                <div className="flex flex-row justify-center items-center">
+                  <div>
+                    <input
+                      id="messageText"
+                      className="px-5 py-5 w-800 font-medium text-md font-primary info-panels input-color-group-one input-color"
+                      value={this.state.new_room_name}
+                      onChange={this.onInputChange}
+                      onKeyUp={(e) => this.onEnterHandler(e)}
+                      autoComplete="off"
+                    />
+                  </div>
+                </div>
+                <div>
+                  <button
+                    className="border-2 border-secondary-light rounded-full px-4 py-2 text-medium text-secondary hover:bg-[#111827] hover:text-white"
+                    onClick={(e) => this.startNewRoomClick(e)}
+                  >
+                    Create Room
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* One to display rooms has width = 75% */}
           </div>
         </div>
       );
     }
   }
-
-
 }
 
 export default Home;

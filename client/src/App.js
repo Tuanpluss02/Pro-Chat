@@ -1,6 +1,5 @@
 import "./App.css";
 //import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import NavBar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Dashboard from "./pages/Dashboard";
 import Home from "./pages/Home";
@@ -18,7 +17,6 @@ function App() {
           <Route path="/register" component={Register} />
           <Route path="/login" component={Login} />
           <ProtectedRoute path="/dashboard" page={Dashboard} />
-
           <ProtectedRoute path="/profile" page={Profile} />
           <ProtectedRoute path="" page={Home} />
         </Switch>
@@ -29,4 +27,3 @@ function App() {
 
 export default App;
 // // day la FE
-

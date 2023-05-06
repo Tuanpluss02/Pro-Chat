@@ -51,9 +51,9 @@ class ChatModule extends React.Component {
     if (client === null || client.readyState === WebSocket.CLOSED) {
       client = new WebSocket(
         "ws://localhost:8000/ws/" +
-        this.state.room_name +
-        "/" +
-        this.state.currentUser
+          this.state.room_name +
+          "/" +
+          this.state.currentUser
       );
     }
   }
@@ -237,7 +237,6 @@ class ChatModule extends React.Component {
   //   }
   // };
 
-
   render() {
     const {
       isLoaded,
@@ -247,11 +246,7 @@ class ChatModule extends React.Component {
       room_name,
     } = this.state;
     if (!isLoaded) {
-      return (
-        <div className="m-8 p-4 w-600 h-600 rounded-lg bg-secondary-light">
-          <h1>Loading...</h1>
-        </div>
-      );
+      return <div className="loader" />;
     } else if (openVideoChat) {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
@@ -365,7 +360,5 @@ class ChatModule extends React.Component {
       );
     }
   }
-
-
 }
 export { ChatModule };

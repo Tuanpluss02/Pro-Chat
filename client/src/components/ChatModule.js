@@ -278,22 +278,19 @@ class ChatModule extends React.Component {
                               ? "right"
                               : "left",
                             marginLeft: message.user.username === this.state.currentUser
-                              ? "400px"
+                              ? "500px"
                               : "auto",
                             marginRight: message.user.username === this.state.currentUser
                               ? "auto"
-                              : "400px",
+                              : "500px",
                           }}
                         >
-                          <div
-                            className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
+                        <div className={`flex flex-col p-2 rounded-lg ${message.user.username === this.state.currentUser
                               ? "bg-blue-500 text-white"
-                              : "bg-gray-500 text-white"}`}
-                          >
-                            {message.content}
-                          </div>
+                              : "bg-gray-500 text-white"}`}>
                           <div
-                            padding="10px"
+                            
+                            padding="12px"
                             style={{
                               float: message.user.username === this.state.currentUser
                                 ? "right"
@@ -303,37 +300,63 @@ class ChatModule extends React.Component {
                               ? "right"
                               : "left"}
                           >
-                            {message.user.username}
+                            <div
+                              className = "text-base font-bold text-white-400">
+                              {message.user.username}
+                            </div>
+                            <div
+                              className={`rounded-lg text-base text-white-300`}
+                              textAlign={message.user.username === this.state.currentUser
+                                ? "right"
+                                : "left"}
+                            >
+                              {message.content}
+                            </div>
                           </div>
                         </div>
+                      </div>
                       );
                     })}
                   </div>
                 </div>
-                <div
-                  className="p-4 rounded-lg"
-                >
-                  <input
-                    type="text"
-                    className="px-5 py-5 pl-10 pr-5 mr-5 w-2/3 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
-                    placeholder="Type a message..."
-                    value={this.state.message_draft}
-                    onChange={(event) => this.setState({ message_draft: event.target.value })}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.preventDefault();
-                        this.onEnterHandler(event);
-                      }
-                    } } />
-                  <button
-                    className="px-4 py-2 rounded-lg bg-blue-500 text-white font-medium"
-                    onClick={(event) => this.onClickHandler(event)}
-                  >
-                    Send
-                  </button>
+                <div className="flex items-center p-4 rounded-md">
+              <input
+                placeholder="Type a message..."
+                required=""
+                type="text"
+                name="text"
+                className="px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-md font-medium text-md font-primary info-panels input-color-group-one input-color"
+                value={this.state.message_draft}
+                onChange={(event) =>
+                  this.setState({ message_draft: event.target.value })
+                }
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    this.onEnterHandler(event);
+                  }
+                }}
+              />
+              <send
+                className="font-medium h-12"
+                onClick={(event) => this.onClickHandler(event)}
+              >
+                <div class="svg-wrapper-1">
+                  <div class="svg-wrapper">
+                    <svg height="24" width="24" viewBox="0 0 24 24">
+                      <path d="M0 0h24v24H0z" fill="none"></path>
+                      <path
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </div>
                 </div>
-              </div>
+                <span>SEND</span>
+              </send>
             </div>
+          </div>
+              </div>
       );
     }
   }

@@ -61,66 +61,51 @@ const Register = () => {
               <h1 className="text-transparent h-20">Sign-up</h1>
             </div>
             <div className="space-y-4">
-              <form>
-                <label 
-                  class="block text-lg font-medium mb-1 text-white text-left"
-                  htmlFor="username"
-                >
-                  Username
-                </label>
-                  <input
-                    className={input_text_style}
-                    id="username"
-                    value={username}
-                    ref={userRef}
-                    onChange={(e) => setUsername(e.target.value)}
-                    autoComplete="off"
-                    placeholder="Enter Username"
-                    name="uname"
-                    required
-                  />
-                <label 
-                  class="block text-lg font-medium mb-1 text-white text-left"
-                  htmlFor="password"
-                >
-                  Password
-                </label>
-                  <input
-                    className={input_text_style}
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    type="password"
-                    autoComplete="off"
-                    placeholder="Enter Password"
-                    name="psw"
-                    required
-                  />
-                <label 
-                  class="block text-lg font-medium mb-1 text-white text-left"
-                  htmlFor="confirm_pwd"
-                >
-                  Confirm your password
-                </label>
-                  <input
-                    className={input_text_style}
-                    type="password"
-                    id="confirm_pwd"
-                    onChange={(e) => setMatchPwd(e.target.value)}
-                    value={matchPwd}
-                    required
-                    aria-invalid={validMatch ? "false" : "true"}
-                    aria-describedby="confirmnote"
-                    onFocus={() => setMatchFocus(true)}
-                    onBlur={() => setMatchFocus(false)}
-                    placeholder="Re-enter Password"
-                  />
-                <p
-                  id="confirmnote"
-                  className={matchFocus && !validMatch ? "text-red-500" : "sr-only"}
-                >
-                  Must match the first password input field.
-                </p>
-              </form>
+              <div>
+              <h1 class="text-lg font-medium mb-1 text-white text-left">Username</h1>
+                <input
+                  className={input_text_style}
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  autoComplete="off"
+                  placeholder="Enter Username"
+                  name="uname"
+                  required
+                />
+              </div>
+              {/* <div>
+              <h1 class="text-lg font-medium mb-1 text-white text-left">Email</h1>
+                <input
+                  className={input_text_style}
+                  // value={password}
+                  // onChange={(e) => setPassword(e.target.value)}
+                  // type="password"
+                  // autoComplete="off"
+                  // name="psw"
+                  // required
+                  placeholder="Enter Email"
+                />
+              </div> */}
+              <div>
+              <h1 class="text-lg font-medium mb-1 text-white text-left">Password</h1>
+                <input
+                  className={input_text_style}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  type="password"
+                  autoComplete="off"
+                  placeholder="Enter Password"
+                  name="psw"
+                  required
+                />
+              </div>
+              <div>
+              <h1 class="text-lg font-medium mb-1 text-white text-left">Confirm your password</h1>
+                <input
+                  className={input_text_style}
+                  placeholder="Re-enter Password"
+                />
+              </div>
               <div>
                 <button
                   className="px-10 py-2 w-60 rounded-md bg-emerald-400 text-white font-medium text-medium"
@@ -128,7 +113,7 @@ const Register = () => {
                 >
                   Register
                 </button>
-                <h1 class="text-lg font-medium mb-1 text-white text-center">
+                <h1 class="px-10 text-lg font-medium mb-1 text-white text-center">
                   Already have an account?  <Link to="/login" className="text-blue-500">Login</Link>
                 </h1>
               </div>

@@ -1,11 +1,14 @@
-import EmojiConverter from "emoji-js";
-import  React from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import { animateScroll } from "react-scroll";
 
 import axios from "axios";
 import { get_user_from_token } from "../api/auth";
 import { get_room, put_user_into_room } from "../api/rooms";
+
+import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
+import Picker from "emoji-picker-react";
+import EmojiConverter from "emoji-js";
 
 var jsemoji = new EmojiConverter();
 jsemoji.replace_mode = "unified";
@@ -85,7 +88,7 @@ class ChatModule extends React.Component {
         client.send(JSON.stringify(message_obj));
         this.setState({ message_draft: "" }, this.scrollToBottom);
       }
-      client.close(1000, "Deliberate disconnection");
+      client.close(2000, "Deliberate disconnection");
     }
   }
   onOpenEmoji() {
@@ -102,7 +105,7 @@ class ChatModule extends React.Component {
   componentDidMount() {
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 5000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
@@ -248,115 +251,89 @@ class ChatModule extends React.Component {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
       return (
-        <div className="w-2/3">
-          <div className="w-[800px] mx-auto">
-            <div
-              className="p-4 rounded-lg"
-              style={{
-                height: "calc(100vh - 164px)",
-                width: "800px",
-                overflow: "scroll",
-              }}
-              id="message-list"
-            >
-              <div className="space-y-4 w-[800px]">
-                {messages.map((message, index) => {
-                  return (
-                    <div
-                      style={{
-                        display: "flex",
-                        flexDirection:
-                          message.user.username === this.state.currentUser
-                            ? "row"
-                            : "row-reverse",
-                        float:
-                          message.user.username === this.state.currentUser
-                            ? "right"
-                            : "left",
-                        textAlign:
-                          message.user.username === this.state.currentUser
-                            ? "right"
-                            : "left",
-                        marginLeft:
-                          message.user.username === this.state.currentUser
-                            ? "400px"
-                            : "auto",
-                        marginRight:
-                          message.user.username === this.state.currentUser
-                            ? "auto"
-                            : "400px",
-                      }}
-                    >
-                      <div
-                        className={`mx-8 p-2 rounded-lg ${
-                          message.user.username === this.state.currentUser
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-500 text-white"
-                        }`}
-                      >
-                        {message.content}
-                      </div>
-                      <div
-                        padding="10px"
-                        style={{
-                          float:
-                            message.user.username === this.state.currentUser
+            <div className="w-full h-full border-blue-500">
+              <div className="w-full h-full mx-auto">
+                <div
+                  className="p-4 rounded-lg"
+                  style={{
+                    overflow: "scroll",
+                    height: "700px",
+                    width: "w-full",
+                  }}
+                  id="message-list"
+                >
+                  <div className="space-y-4 w-full">
+                    {messages.map((message, index) => {
+                      return (
+                        <div
+                          style={{
+                            display: "flex",
+                            flexDirection: message.user.username === this.state.currentUser
+                              ? "row"
+                              : "row-reverse",
+                            float: message.user.username === this.state.currentUser
                               ? "right"
                               : "left",
-                        }}
-                        textAlign={
-                          message.user.username === this.state.currentUser
-                            ? "right"
-                            : "left"
-                        }
-                      >
-                        <span className="font-semibold">
-                          {message.user.username}
-                        </span>
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-            <div className="flex items-center p-4 rounded-lg">
-              <input
-                placeholder="Type a message..."
-                required=""
-                type="text"
-                name="text"
-                className="px-5 py-5 pl-10 pr-10 mr-20 w-2/3 font-medium text-md font-primary info-panels input-color-group-one input-color"
-                value={this.state.message_draft}
-                onChange={(event) =>
-                  this.setState({ message_draft: event.target.value })
-                }
-                onKeyDown={(event) => {
-                  if (event.key === "Enter") {
-                    event.preventDefault();
-                    this.onEnterHandler(event);
-                  }
-                }}
-              />
-              <send
-                className="font-medium h-12"
-                onClick={(event) => this.onClickHandler(event)}
-              >
-                <div class="svg-wrapper-1">
-                  <div class="svg-wrapper">
-                    <svg height="24" width="24" viewBox="0 0 24 24">
-                      <path d="M0 0h24v24H0z" fill="none"></path>
-                      <path
-                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
-                        fill="currentColor"
-                      ></path>
-                    </svg>
+                            textAlign: message.user.username === this.state.currentUser
+                              ? "right"
+                              : "left",
+                            marginLeft: message.user.username === this.state.currentUser
+                              ? "400px"
+                              : "auto",
+                            marginRight: message.user.username === this.state.currentUser
+                              ? "auto"
+                              : "400px",
+                          }}
+                        >
+                          <div
+                            className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
+                              ? "bg-blue-500 text-white"
+                              : "bg-gray-500 text-white"}`}
+                          >
+                            {message.content}
+                          </div>
+                          <div
+                            padding="10px"
+                            style={{
+                              float: message.user.username === this.state.currentUser
+                                ? "right"
+                                : "left",
+                            }}
+                            textAlign={message.user.username === this.state.currentUser
+                              ? "right"
+                              : "left"}
+                          >
+                            {message.user.username}
+                          </div>
+                        </div>
+                      );
+                    })}
                   </div>
                 </div>
-                <span>SEND</span>
-              </send>
+                <div
+                  className="p-4 rounded-lg"
+                >
+                  <input
+                    type="text"
+                    className="px-5 py-5 pl-10 pr-5 mr-5 w-2/3 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
+                    placeholder="Type a message..."
+                    value={this.state.message_draft}
+                    onChange={(event) => this.setState({ message_draft: event.target.value })}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter") {
+                        event.preventDefault();
+                        this.onEnterHandler(event);
+                      }
+                    } } />
+                  <button
+                    className="px-4 py-2 rounded-lg bg-blue-500 text-white font-medium"
+                    onClick={(event) => this.onClickHandler(event)}
+                  >
+                    Send
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
       );
     }
   }

@@ -1,13 +1,31 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { register } from "../api/auth";
 import { Link } from "react-router-dom";
 
-const Register = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  
 
+
+const Register = () => {
+  const userRef = useRef();
+
+  const [username, setUsername] = useState("");
+  
+  const [password, setPassword] = useState("");
+
+
+  const [matchPwd, setMatchPwd] = useState('');
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false); 
+
+
+  useEffect(() => {
+    userRef.current.focus();
+  }, [])
+
+  useEffect(() => {
+      setValidMatch(password === matchPwd);
+  }, [password, matchPwd])
+  
   const registerHandler = async (e) => {
     e.preventDefault();
     try {

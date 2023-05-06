@@ -283,22 +283,19 @@ class ChatModule extends React.Component {
                               ? "right"
                               : "left",
                             marginLeft: message.user.username === this.state.currentUser
-                              ? "400px"
+                              ? "500px"
                               : "auto",
                             marginRight: message.user.username === this.state.currentUser
                               ? "auto"
-                              : "400px",
+                              : "500px",
                           }}
                         >
-                          <div
-                            className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
+                        <div className={`flex flex-col p-2 rounded-lg ${message.user.username === this.state.currentUser
                               ? "bg-blue-500 text-white"
-                              : "bg-gray-500 text-white"}`}
-                          >
-                            {message.content}
-                          </div>
+                              : "bg-gray-500 text-white"}`}>
                           <div
-                            padding="10px"
+                            
+                            padding="12px"
                             style={{
                               float: message.user.username === this.state.currentUser
                                 ? "right"
@@ -308,9 +305,21 @@ class ChatModule extends React.Component {
                               ? "right"
                               : "left"}
                           >
-                            {message.user.username}
+                            <div
+                              className = "text-base font-bold text-white-400">
+                              {message.user.username}
+                            </div>
+                            <div
+                              className={`rounded-lg text-base text-white-300`}
+                              textAlign={message.user.username === this.state.currentUser
+                                ? "right"
+                                : "left"}
+                            >
+                              {message.content}
+                            </div>
                           </div>
                         </div>
+                      </div>
                       );
                     })}
                   </div>

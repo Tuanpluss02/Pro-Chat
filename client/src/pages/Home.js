@@ -29,7 +29,7 @@ class Home extends React.Component {
     };
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 2000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
@@ -57,7 +57,7 @@ class Home extends React.Component {
     };
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 2000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
@@ -100,7 +100,7 @@ class Home extends React.Component {
     };
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 2000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
@@ -125,7 +125,7 @@ class Home extends React.Component {
     let room_name = e.currentTarget.textContent;
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 5000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
@@ -150,7 +150,7 @@ class Home extends React.Component {
     // Fetch all rooms (need to setup credentials from current user)
     let token = localStorage.getItem("token");
     const instance = axios.create({
-      timeout: 1000,
+      timeout: 5000,
       headers: {
         "Access-Control-Allow-Origin": "*",
         Authorization: `Bearer ${token}`,
@@ -196,20 +196,48 @@ class Home extends React.Component {
           {/* Divine to 2 section */}
           <div className="flex flex-row w-full">
             {/* One to create room has width = 25% */}
+            <div className="w-1/2">
+              <div
+                className="space-y-4 p-8 rounded-lg bg-white"
+              >
+                <div
+                  className="flex flex-row justify-center items-center"
+                >
+                  <div>
+                    <input
+                      id="messageText"
+                      className="px-5 py-5 border-2 border-black rounded-md w-full"
+                      value={this.state.new_room_name}
+                      onChange={this.onInputChange}
+                      onKeyUp={(e) => this.onEnterHandler(e)}
+                      autoComplete="off"
+                    />
+                  </div>
+                </div>
+                <div>
+                    <button
+                      className="border-2 border-secondary-light bg-blue-400 rounded-full px-4 py-2 text-medium text-secondary"
+                      onClick={(e) => this.startNewRoomClick(e)}
+                    >
+                      Create Room
+                    </button>
+                </div>
+              </div>
+            </div>
 
-            <div className="w-1/3">
+            {/* One to display rooms has width = 75% */}
+  <div className="w-1/3">
               <div>
                 <h1 className="py-1">Existed Rooms</h1>
                 <div
-                  className="overflow-y-scroll text-center p-4 justify-center max-h-[calc(100vh-108px)]"
                   style={{ justifyContent: "center" }}
                 >
                   {rooms.map((room, index) => {
                     if (user.favorites.includes(room.room_name)) {
                       return (
-                        <div className="m-4">
+                        <div className="border-2 border-secondary-light bg-blue-400 rounded-md px-4 py-2 text-medium text-secondary">
                           <div
-                            className="flex justify-between items-center border-2 border-secondary-light rounded-full px-4 py-2"
+                            className="border-2 border-secondary-light bg-blue-400 rounded-md px-4 py-2 text-medium text-secondary"
                             onClick={(e) => this.handleRoomClick(e)}
                             id={room.room_name}
                             key={index}
@@ -231,9 +259,9 @@ class Home extends React.Component {
                       );
                     } else {
                       return (
-                        <div className="overflow-y-scroll m-4">
+                        <div className="border-2 border-secondary-light bg-blue-400 rounded-full px-4 py-2 text-medium text-secondary">
                           <div
-                            className=" border-2 border-secondary-light rounded-full px-4 py-2"
+                            className="flex flex-col order-2 border-secondary-light rounded-md bg-blue px-4 py-2"
                             onClick={(e) => this.handleRoomClick(e)}
                             id={room.room_name}
                             key={index}

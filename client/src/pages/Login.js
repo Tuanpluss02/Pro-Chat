@@ -82,14 +82,14 @@ const Login = () => {
               </div>
               <div>
                 <button
-                  className="px-10 py-2 w-36 rounded-full bg-emerald-400 text-white font-medium text-medium"
+                  className="px-10 py-2 w-36 rounded-md bg-emerald-400 text-white font-medium text-medium"
                   onClick={loginHandler}
                 >
                   Login
                 </button>
               </div>
-              <h1 class="text-lg font-medium mb-1 text-white text-left">
-                "Need an account?" <Link to="/register" className="text-blue-500">Register</Link>
+              <h1 class="px-10 text-lg font-medium mb-1 text-white text-center">
+                Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
               </h1>
               <div>
                 <p className="text-red-500">{errorMessage}</p>

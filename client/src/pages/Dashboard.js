@@ -45,7 +45,7 @@ class Dashboard extends React.Component {
         <div className="flex flex-col">
           <div className="flex items-center justify-center bg-blue-200 h-16">
             <h1 className="text-3xl font-bold">
-              Welcome to the {decodeURIComponent(room)} room
+              {decodeURIComponent(room)}
             </h1>
           </div>
           <div className="flex-grow bg-gray-100">

@@ -16,6 +16,7 @@ class Profile extends React.Component {
     this.onPasswordChange = this.onPasswordChange.bind(this);
     this.onEnterHandler = this.onEnterHandler.bind(this);
     this.imageUpload = this.imageUpload.bind(this);
+    this.onLogout = this.onLogout.bind(this);
   }
 
   onUsernameChange(e) {
@@ -61,6 +62,11 @@ class Profile extends React.Component {
       });
   }
 
+  onLogout() {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+  }
+
   componentDidMount() {
     let token = localStorage.getItem("token");
     const instance = axios.create({
@@ -85,7 +91,7 @@ class Profile extends React.Component {
           }, "");
           return btoa(str).replace(/.{76}(?=.)/g, "$&\n");
         }
-        const s3_key = this.state.user.profile_pic_img_src;
+        const s3_key = this.state.user?.profile_pic_img_src;
         const s3_bucket = this.state.s3_bucket;
         let config = require("../config.json");
         AWS.config.update(config);
@@ -109,7 +115,7 @@ class Profile extends React.Component {
         );
       })
       .catch((err) => {
-        localStorage.removeItem("token");
+        //localStorage.removeItem("token");
         console.log("ERROR FETCHING CURRENT USER and profile pic\n" + err);
       });
   }
@@ -147,6 +153,24 @@ class Profile extends React.Component {
                   onChange={this.imageUpload}
                 />
               </div>
+              <button
+                onClick={this.onLogout}
+                className="cursor-pointer font-bold font-sans transition-all duration-200 py-[10px] px-[20px] rounded-[100px] bg-[#cfef00] border border-solid border-transparent text-sm hover:bg-[#c4e201] active:scale-95"
+              >
+                <svg
+                  className="ml-[10px] transition-transform duration-300 ease-in-out hover:translate-x-[5px]"
+                  fill="#000000"
+                  width="34px"
+                  height="34px"
+                  viewBox="0 0 2.21 2.21"
+                  enable-background="new 0 0 52 52"
+                >
+                  <g>
+                    <path d="M0.893 2.061v-0.128c0 -0.034 -0.03 -0.064 -0.064 -0.064h-0.425c-0.034 0 -0.064 -0.03 -0.064 -0.064v-1.403C0.34 0.37 0.37 0.34 0.404 0.34h0.425c0.034 0 0.064 -0.03 0.064 -0.064v-0.128c0 -0.034 -0.03 -0.064 -0.064 -0.064H0.255C0.162 0.085 0.085 0.162 0.085 0.255v1.7c0 0.094 0.077 0.17 0.17 0.17h0.574c0.034 0 0.064 -0.03 0.064 -0.064z" />
+                    <path d="M2.108 1.148c0.026 -0.026 0.026 -0.064 0 -0.089L1.534 0.485c-0.026 -0.026 -0.064 -0.026 -0.089 0l-0.089 0.089c-0.026 0.026 -0.026 0.064 0 0.089l0.238 0.238c0.026 0.026 0.009 0.072 -0.03 0.072H0.659c-0.034 0 -0.064 0.026 -0.064 0.059v0.128c0 0.034 0.03 0.068 0.064 0.068h0.901c0.038 0 0.055 0.047 0.03 0.072l-0.238 0.238c-0.026 0.026 -0.026 0.064 0 0.089l0.089 0.089c0.026 0.026 0.064 0.026 0.089 0L2.108 1.148z" />
+                  </g>
+                </svg>
+              </button>
             </div>
           </div>
           <div className="space-y-4">

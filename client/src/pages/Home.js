@@ -229,8 +229,7 @@ class Home extends React.Component {
   <div className="w-1/3">
               <div>
                 <h1 className="py-1">Existed Rooms</h1>
-                <div
-                  style={{ justifyContent: "center" }}
+                <div className="justify-center h-screen overflow-y-scroll"
                 >
                   {rooms.map((room, index) => {
                     if (user.favorites.includes(room.room_name)) {

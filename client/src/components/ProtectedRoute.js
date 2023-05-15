@@ -8,13 +8,13 @@ class ProtectedRoute extends React.Component {
     const isAuthenticated = localStorage.getItem("token");
     return isAuthenticated ? (
       <div className="flex w-screen">
-        <div class="flex-none w-16">
+        <div className="flex-none w-16">
           <NavBar />
         </div>
-        <div class="flex-auto w-3/5">
+        <div className="flex-auto w-3/5">
           <Component />
         </div>
-        <div class="flex-auto w-2/5">
+        <div className="flex-auto w-2/5">
           <h1>Members</h1>
         </div>
       </div>

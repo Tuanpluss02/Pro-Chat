@@ -18,7 +18,7 @@ var client = null;
 function checkWebSocket(username, roomname) {
   if (client === null || client.readyState === WebSocket.CLOSED) {
     client = new WebSocket(
-      "ws://localhost:8000/ws/" + roomname + "/" + username
+      "wss://api-pro-chat.onrender.com/ws/" + roomname + "/" + username
     );
   }
   return client;
@@ -43,6 +43,7 @@ class ChatModule extends React.Component {
     this.onOpenEmoji = this.onOpenEmoji.bind(this);
     this.onEmojiSelection = this.onEmojiSelection.bind(this);
     this.onOpenVideoChat = this.onOpenVideoChat.bind(this);
+    this.emojiRef = React.createRef();
   }
   onInputChange(event) {
     this.setState({ message_draft: event.target.value });
@@ -90,16 +91,7 @@ class ChatModule extends React.Component {
       }
       client.close(2000, "Deliberate disconnection");
     }
-  }
-  onOpenEmoji() {
-    let currentState = this.state.openEmoji;
-    this.setState({ openEmoji: !currentState });
-  }
-  onEmojiSelection(emoji_code, emoji_data) {
-    let e = emoji_data.emoji;
-    let _message =
-      this.state.message_draft === undefined ? "" : this.state.message_draft;
-    this.setState({ message_draft: _message + e });
+    document.removeEventListener("click", this.handleDocumentClick);
   }
 
   componentDidMount() {
@@ -186,6 +178,24 @@ class ChatModule extends React.Component {
         localStorage.removeItem("token");
         console.error("ERROR FETCHING CURRENT USER\n" + err);
       });
+    document.addEventListener("click", this.handleDocumentClick);
+  }
+  handleDocumentClick = (event) => {
+    if (
+      this.emojiRef.current &&
+      !this.emojiRef.current.contains(event.target)
+    ) {
+      this.setState({ openEmoji: false });
+    }
+  };
+  onOpenEmoji() {
+    this.setState({ openEmoji: !this.state.openEmoji });
+  }
+  onEmojiSelection(emoji_code, emoji_data) {
+    let e = emoji_data.emoji;
+    let _message =
+      this.state.message_draft === undefined ? "" : this.state.message_draft;
+    this.setState({ message_draft: _message + e });
   }
 
   onEnterHandler = (event) => {
@@ -238,6 +248,7 @@ class ChatModule extends React.Component {
   // };
 
   render() {
+    // Emoji
     const {
       isLoaded,
       messages,
@@ -251,89 +262,147 @@ class ChatModule extends React.Component {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
       return (
-            <div className="w-full h-full border-blue-500">
-              <div className="w-full h-full mx-auto">
-                <div
-                  className="p-4 rounded-lg"
-                  style={{
-                    overflow: "scroll",
-                    height: "700px",
-                    width: "w-full",
-                  }}
-                  id="message-list"
-                >
-                  <div className="space-y-4 w-full">
-                    {messages.map((message, index) => {
-                      return (
+        <div className="w-full h-full border-blue-500">
+          <div className="w-full h-full mx-auto">
+            <div
+              className="p-4 rounded-lg"
+              style={{
+                overflow: "scroll",
+                height: "calc(100vh - 164px)",
+                width: "w-full",
+              }}
+              id="message-list"
+            >
+              <div className="space-y-4 w-full">
+                {messages.map((message, index) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        flexDirection:
+                          message.user.username === this.state.currentUser
+                            ? "row"
+                            : "row-reverse",
+                        float:
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left",
+                        textAlign:
+                          message.user.username === this.state.currentUser
+                            ? "right"
+                            : "left",
+                        marginLeft:
+                          message.user.username === this.state.currentUser
+                            ? "500px"
+                            : "auto",
+                        marginRight:
+                          message.user.username === this.state.currentUser
+                            ? "auto"
+                            : "500px",
+                      }}
+                    >
+                      <div
+                        className={`flex flex-col p-2 rounded-lg ${
+                          message.user.username === this.state.currentUser
+                            ? "bg-blue-500 text-white"
+                            : "bg-gray-500 text-white"
+                        }`}
+                      >
                         <div
+                          padding="12px"
                           style={{
-                            display: "flex",
-                            flexDirection: message.user.username === this.state.currentUser
-                              ? "row"
-                              : "row-reverse",
-                            float: message.user.username === this.state.currentUser
-                              ? "right"
-                              : "left",
-                            textAlign: message.user.username === this.state.currentUser
-                              ? "right"
-                              : "left",
-                            marginLeft: message.user.username === this.state.currentUser
-                              ? "400px"
-                              : "auto",
-                            marginRight: message.user.username === this.state.currentUser
-                              ? "auto"
-                              : "400px",
+                            float:
+                              message.user.username === this.state.currentUser
+                                ? "right"
+                                : "left",
                           }}
+                          textAlign={
+                            message.user.username === this.state.currentUser
+                              ? "right"
+                              : "left"
+                          }
                         >
+                          <div className="text-base font-bold text-white-400">
+                            {message.user.username}
+                          </div>
                           <div
-                            className={`mx-8 p-2 rounded-lg ${message.user.username === this.state.currentUser
-                              ? "bg-blue-500 text-white"
-                              : "bg-gray-500 text-white"}`}
+                            className={`rounded-lg text-base text-white-300`}
+                            textAlign={
+                              message.user.username === this.state.currentUser
+                                ? "right"
+                                : "left"
+                            }
                           >
                             {message.content}
                           </div>
-                          <div
-                            padding="10px"
-                            style={{
-                              float: message.user.username === this.state.currentUser
-                                ? "right"
-                                : "left",
-                            }}
-                            textAlign={message.user.username === this.state.currentUser
-                              ? "right"
-                              : "left"}
-                          >
-                            {message.user.username}
-                          </div>
                         </div>
-                      );
-                    })}
-                  </div>
-                </div>
-                <div
-                  className="p-4 rounded-lg"
-                >
-                  <input
-                    type="text"
-                    className="px-5 py-5 pl-10 pr-5 mr-5 w-2/3 rounded-lg outline-none border-2 border-blue-500 font-medium text-md font-primary text-gray-400"
-                    placeholder="Type a message..."
-                    value={this.state.message_draft}
-                    onChange={(event) => this.setState({ message_draft: event.target.value })}
-                    onKeyDown={(event) => {
-                      if (event.key === "Enter") {
-                        event.preventDefault();
-                        this.onEnterHandler(event);
-                      }
-                    } } />
-                  <button
-                    className="px-4 py-2 rounded-lg bg-blue-500 text-white font-medium"
-                    onClick={(event) => this.onClickHandler(event)}
-                  >
-                    Send
-                  </button>
-                </div>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
+            <div className="flex items-center p-4 rounded-md">
+              <input
+                placeholder="Type a message..."
+                required=""
+                type="text"
+                name="text"
+                className="px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-md font-medium text-md font-primary info-panels input-color-group-one input-color"
+                value={this.state.message_draft}
+                onChange={(event) =>
+                  this.setState({ message_draft: event.target.value })
+                }
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") {
+                    event.preventDefault();
+                    this.onEnterHandler(event);
+                  }
+                }}
+              />
+              <div ref={this.emojiRef} className="absolute">
+                <button
+                  className="h-12 w-12"
+                  onClick={() => {
+                    this.onOpenEmoji();
+                  }}
+                >
+                  <SentimentVerySatisfiedIcon />
+                </button>
+                {this.state.openEmoji && (
+                  <Picker
+                    onEmojiClick={this.onEmojiSelection}
+                    disableAutoFocus={false}
+                    disableSearchBar={false}
+                    native
+                    pickerStyle={{
+                      position: "absolute",
+                      bottom: "80px",
+                      left: "30px",
+                    }}
+                  />
+                )}
+              </div>
+              <send
+                className="font-medium h-12"
+                onClick={(event) => this.onClickHandler(event)}
+              >
+                <div className="svg-wrapper-1">
+                  <div className="svg-wrapper">
+                    <svg height="24" width="24" viewBox="0 0 24 24">
+                      <path d="M0 0h24v24H0z" fill="none"></path>
+                      <path
+                        d="M1.946 9.315c-.522-.174-.527-.455.01-.634l19.087-6.362c.529-.176.832.12.684.638l-5.454 19.086c-.15.529-.455.547-.679.045L12 14l6-8-8 6-8.054-2.685z"
+                        fill="currentColor"
+                      ></path>
+                    </svg>
+                  </div>
+                </div>
+                <span>SEND</span>
+              </send>
+            </div>
+          </div>
+        </div>
       );
     }
   }

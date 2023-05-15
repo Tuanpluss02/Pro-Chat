@@ -18,7 +18,7 @@ var client = null;
 function checkWebSocket(username, roomname) {
   if (client === null || client.readyState === WebSocket.CLOSED) {
     client = new WebSocket(
-      "wss://api-pro-chat.onrender.com/ws/" + roomname + "/" + username
+      "wss://127.0.0.1:8000/ws/" + roomname + "/" + username
     );
   }
   return client;

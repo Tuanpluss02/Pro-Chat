@@ -31,6 +31,7 @@ const Register = () => {
         }
       );
       console.log(response.data);
+      response.status === 200 ? alert("Registered Successfully") : alert("Registration Failed");
       if (response.status !== 200) return null;
     } catch (error) {
       console.error(error);

@@ -571,6 +571,18 @@ video {
   --tw-backdrop-sepia:  ;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
 .absolute {
   position: absolute;
 }
@@ -602,6 +614,10 @@ video {
 
 .mr-20 {
   margin-right: 5rem;
+}
+
+.block {
+  display: block;
 }
 
 .flex {

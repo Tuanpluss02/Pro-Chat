@@ -7,8 +7,8 @@ import { get_user_from_token } from "../api/auth";
 import { get_room, put_user_into_room } from "../api/rooms";
 
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
-import Picker from "emoji-picker-react";
 import EmojiConverter from "emoji-js";
+import Picker from "emoji-picker-react";
 
 var jsemoji = new EmojiConverter();
 jsemoji.replace_mode = "unified";
@@ -51,10 +51,10 @@ class ChatModule extends React.Component {
   checkWebSocketConnection() {
     if (client === null || client.readyState === WebSocket.CLOSED) {
       client = new WebSocket(
-        "ws://localhost:8000/ws/" +
-          this.state.room_name +
-          "/" +
-          this.state.currentUser
+        "wss://api-pro-chat.onrender.com/ws/" +
+        this.state.room_name +
+        "/" +
+        this.state.currentUser
       );
     }
   }
@@ -302,11 +302,10 @@ class ChatModule extends React.Component {
                       }}
                     >
                       <div
-                        className={`flex flex-col p-2 rounded-lg ${
-                          message.user.username === this.state.currentUser
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-500 text-white"
-                        }`}
+                        className={`flex flex-col p-2 rounded-lg ${message.user.username === this.state.currentUser
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-500 text-white"
+                          }`}
                       >
                         <div
                           padding="12px"
@@ -408,3 +407,4 @@ class ChatModule extends React.Component {
   }
 }
 export { ChatModule };
+

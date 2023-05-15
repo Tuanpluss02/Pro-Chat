@@ -9,8 +9,8 @@ class NavBar extends React.Component {
           <NavLink to="#">
             <svg className="w-6 h-6" viewBox="0 0 0.6 0.6" fill="#9ca3af">
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M0.3 0.48 0 0.16h0.6l-0.3 0.32Z"
               />
             </svg>
@@ -20,8 +20,8 @@ class NavBar extends React.Component {
           <NavLink to="/">
             <svg fill="#9ca3af" className="w-8 h-8" viewBox="0 0 0.72 0.72">
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M0.36 0.09s-0.186 0.16 -0.289 0.247A0.031 0.031 0 0 0 0.06 0.36a0.03 0.03 0 0 0 0.03 0.03h0.06v0.21a0.03 0.03 0 0 0 0.03 0.03h0.09a0.03 0.03 0 0 0 0.03 -0.03v-0.12h0.12v0.12a0.03 0.03 0 0 0 0.03 0.03h0.09a0.03 0.03 0 0 0 0.03 -0.03v-0.21h0.06a0.03 0.03 0 0 0 0.03 -0.03 0.029 0.029 0 0 0 -0.011 -0.023C0.546 0.25 0.36 0.09 0.36 0.09z"
               />
             </svg>
@@ -33,8 +33,8 @@ class NavBar extends React.Component {
               <title />
               <path d="M0.677 0.496a0.298 0.298 0 0 1 -0.394 0A0.45 0.45 0 0 0 0.03 0.9a0.03 0.03 0 0 0 0.03 0.03h0.84a0.03 0.03 0 0 0 0.03 -0.03 0.45 0.45 0 0 0 -0.253 -0.404Z" />
               <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
+                strokeLinecap="round"
+                strokeLinejoin="round"
                 d="M0.72 0.27A0.24 0.24 0 0 1 0.48 0.51A0.24 0.24 0 0 1 0.24 0.27A0.24 0.24 0 0 1 0.72 0.27z"
               />
             </svg>

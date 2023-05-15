@@ -9,22 +9,10 @@ const Register = () => {
   const userRef = useRef();
 
   const [username, setUsername] = useState("");
-  
   const [password, setPassword] = useState("");
-
-
   const [matchPwd, setMatchPwd] = useState('');
   const [validMatch, setValidMatch] = useState(false);
   const [matchFocus, setMatchFocus] = useState(false); 
-
-
-  useEffect(() => {
-    userRef.current.focus();
-  }, [])
-
-  useEffect(() => {
-      setValidMatch(password === matchPwd);
-  }, [password, matchPwd])
   
   const registerHandler = async (e) => {
     e.preventDefault();
@@ -51,7 +39,6 @@ const Register = () => {
 
   const input_text_style =
     "px-10 py-2 w-96 rounded-md outline-none border-2 border-primary font-medium text-medium text-grey-400";
-
  
     return (
       <>
@@ -97,6 +84,7 @@ const Register = () => {
                   placeholder="Enter Password"
                   name="psw"
                   required
+                  ref={userRef}
                 />
               </div>
               <div>
@@ -104,6 +92,9 @@ const Register = () => {
                 <input
                   className={input_text_style}
                   placeholder="Re-enter Password"
+                  type="password"
+                  autoComplete="off"
+                  ref={userRef}
                 />
               </div>
               <div>

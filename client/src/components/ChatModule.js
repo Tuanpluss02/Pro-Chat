@@ -51,7 +51,7 @@ class ChatModule extends React.Component {
   checkWebSocketConnection() {
     if (client === null || client.readyState === WebSocket.CLOSED) {
       client = new WebSocket(
-        "ws://localhost:8000/ws/" +
+        "wss://api-pro-chat.onrender.com/ws/" +
           this.state.room_name +
           "/" +
           this.state.currentUser

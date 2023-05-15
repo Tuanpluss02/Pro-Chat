@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Redirect } from "react-router-dom";
 import { animateScroll } from "react-scroll";
 
@@ -387,8 +387,8 @@ class ChatModule extends React.Component {
                 className="font-medium h-12"
                 onClick={(event) => this.onClickHandler(event)}
               >
-                <div class="svg-wrapper-1">
-                  <div class="svg-wrapper">
+                <div className="svg-wrapper-1">
+                  <div className="svg-wrapper">
                     <svg height="24" width="24" viewBox="0 0 24 24">
                       <path d="M0 0h24v24H0z" fill="none"></path>
                       <path

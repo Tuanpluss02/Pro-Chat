@@ -56,7 +56,7 @@ const Login = () => {
             </div>
             <div className="space-y-4">
               <div>
-              <h1 class="text-lg font-medium mb-1 text-white text-left">Username</h1>
+              <h1 className="text-lg font-medium mb-1 text-white text-left">Username</h1>
                 <input
                   className={input_text_style}
                   value={username}
@@ -68,7 +68,7 @@ const Login = () => {
                 />
               </div>
               <div>
-              <h1 class="text-lg font-medium mb-1 text-white text-left">Password</h1>
+              <h1 className="text-lg font-medium mb-1 text-white text-left">Password</h1>
                 <input
                   className={input_text_style}
                   value={password}
@@ -88,7 +88,7 @@ const Login = () => {
                   Login
                 </button>
               </div>
-              <h1 class="px-10 text-lg font-medium mb-1 text-white text-center">
+              <h1 className="px-10 text-lg font-medium mb-1 text-white text-center">
                 Don't have an account? <Link to="/register" className="text-blue-500">Register</Link>
               </h1>
               <div>

@@ -43,16 +43,19 @@ class Dashboard extends React.Component {
     } else {
       return (
         <div className="flex flex-col">
-          <div className="flex items-center justify-center bg-blue-200 h-16">
-            <h1 className="text-3xl font-bold">
-              {decodeURIComponent(room)}
-            </h1>
+          <div className="flex">
+            <div className="flex items-center justify-center border-solid border border-blue-500 rounded-sm bg-blue-200 w-3/5 h-16">
+              <h1 className="text-3xl font-bold">{decodeURIComponent(room)}</h1>
+            </div>
+            <div className="flex items-center justify-center border-solid border border-blue-500 rounded-sm bg-blue-200 w-2/5 h-16">
+              <h1 className="text-3xl font-bold">Members</h1>
+            </div>
           </div>
-          <div className="flex-grow bg-gray-100">
-            <ChatModule room_name={room} user={currentUser} />
+          <div className="flex-col bg-gray-100">
+            <ChatModule className="w-3/5" room_name={room} user={currentUser} />
           </div>
         </div>
-      );
+      );      
     }
   }
 }

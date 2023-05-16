@@ -33,3 +33,4 @@ Contributions are always welcome! Please read the contributing guidelines before
 ## License
 
 This project is licensed under the MIT License.
+¯\_(ツ)_/¯

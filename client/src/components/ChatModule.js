@@ -246,6 +246,16 @@ class ChatModule extends React.Component {
   //     }
   //   }
   // };
+  getUsernamesFromMessages() {
+    const { messages } = this.state;
+    const usernamesSet = new Set();
+
+    messages.forEach((message) => {
+      usernamesSet.add(message.user.username);
+    });
+
+    return Array.from(usernamesSet);
+  }
 
   render() {
     // Emoji
@@ -256,14 +266,15 @@ class ChatModule extends React.Component {
       openVideoChat,
       room_name,
     } = this.state;
+    const usernames = this.getUsernamesFromMessages();
     if (!isLoaded) {
       return <div className="loader" />;
     } else if (openVideoChat) {
       return <Redirect push to={"/video/" + room_name} />;
     } else {
       return (
-        <div className="w-full h-full border-blue-500">
-          <div className="w-full h-full mx-auto">
+        <div className="flex w-full h-full border-blue-500">
+          <div className="flex-auto w-3/5 h-full mx-auto border-solid border-x rounded-sm border-blue-500">
             <div
               className="p-4 rounded-lg"
               style={{
@@ -400,6 +411,31 @@ class ChatModule extends React.Component {
                 </div>
                 <span>SEND</span>
               </send>
+            </div>
+          </div>
+          <div className="h-[calc(100vh-164px)] flex-auto w-2/5 border-solid border-x rounded-sm border-blue-500">
+            <div className="flex-col justify-center items-center h-full overflow-hidden">
+              <div className="h-full overflow-y-auto">
+                {usernames.map((username, index) => (
+                  <div
+                    className="flex border rounded-xl m-6 border-blue-500 p-4 justify-start items-center"
+                    key={index}
+                  >
+                    <svg
+                      width="24px"
+                      height="24px"
+                      viewBox="0 0 1.44 1.44"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path d="M0 0h1.44v1.44H0z" fill="none" />
+                      <g id="Shopicon">
+                        <path d="M0.938 0.766C1.024 0.7 1.08 0.597 1.08 0.48c0 -0.199 -0.161 -0.36 -0.36 -0.36S0.36 0.281 0.36 0.48c0 0.117 0.056 0.22 0.142 0.286C0.295 0.856 0.15 1.07 0.15 1.32h1.14c0 -0.25 -0.145 -0.464 -0.352 -0.554zM0.48 0.48c0 -0.132 0.108 -0.24 0.24 -0.24s0.24 0.108 0.24 0.24 -0.108 0.24 -0.24 0.24 -0.24 -0.108 -0.24 -0.24zm0.24 0.36c0.209 0 0.386 0.153 0.436 0.36H0.284C0.334 0.993 0.511 0.84 0.72 0.84z" />
+                      </g>
+                    </svg>
+                    <div className="ml-2">{username}</div>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

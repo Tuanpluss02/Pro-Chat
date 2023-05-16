@@ -14,9 +14,9 @@ class ProtectedRoute extends React.Component {
         <div className="flex-auto w-3/5">
           <Component />
         </div>
-        <div className="flex-auto w-2/5">
+        {/* <div className="flex-auto w-2/5">
           <h1>Members</h1>
-        </div>
+        </div> */}
       </div>
     ) : (
       <Redirect to="/login" />

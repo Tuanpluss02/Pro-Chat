@@ -89,7 +89,7 @@ class ChatModule extends React.Component {
         client.send(JSON.stringify(message_obj));
         this.setState({ message_draft: "" }, this.scrollToBottom);
       }
-      client.close(2000, "Deliberate disconnection");
+      client.close(3000, "Deliberate disconnection");
     }
     document.removeEventListener("click", this.handleDocumentClick);
   }

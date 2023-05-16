@@ -1,9 +1,10 @@
 Feature
-- create group chat, private chat
+- create group chat, private chat	
 - Chat {
 	+ send = text, emoji, (image, file)
 	+ private, group
 }
+
 - Noti
 - Favorites
 - Settings = change email, passowrd, picture, display name, (dark mode, light mode).

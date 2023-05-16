@@ -7,8 +7,8 @@ import { get_user_from_token } from "../api/auth";
 import { get_room, put_user_into_room } from "../api/rooms";
 
 import SentimentVerySatisfiedIcon from "@material-ui/icons/SentimentVerySatisfied";
-import Picker from "emoji-picker-react";
 import EmojiConverter from "emoji-js";
+import Picker from "emoji-picker-react";
 
 var jsemoji = new EmojiConverter();
 jsemoji.replace_mode = "unified";
@@ -52,9 +52,9 @@ class ChatModule extends React.Component {
     if (client === null || client.readyState === WebSocket.CLOSED) {
       client = new WebSocket(
         "wss://api-pro-chat.onrender.com/ws/" +
-          this.state.room_name +
-          "/" +
-          this.state.currentUser
+        this.state.room_name +
+        "/" +
+        this.state.currentUser
       );
     }
   }
@@ -313,11 +313,10 @@ class ChatModule extends React.Component {
                       }}
                     >
                       <div
-                        className={`flex flex-col p-2 rounded-lg ${
-                          message.user.username === this.state.currentUser
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-500 text-white"
-                        }`}
+                        className={`flex flex-col p-2 rounded-lg ${message.user.username === this.state.currentUser
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-500 text-white"
+                          }`}
                       >
                         <div
                           padding="12px"
@@ -359,7 +358,7 @@ class ChatModule extends React.Component {
                 required=""
                 type="text"
                 name="text"
-                className="px-5 py-5 pl-10 pr-10 mr-20 w-2/3 rounded-md font-medium text-md font-primary info-panels input-color-group-one input-color"
+                className="px-5 py-5 pl-10 pr-10 mr-5 w-11/12 rounded-md font-medium text-md font-primary info-panels input-color-group-one input-color"
                 value={this.state.message_draft}
                 onChange={(event) =>
                   this.setState({ message_draft: event.target.value })
@@ -444,3 +443,4 @@ class ChatModule extends React.Component {
   }
 }
 export { ChatModule };
+

@@ -186,65 +186,38 @@ class Home extends React.Component {
       return <Redirect push to={"/dashboard/" + roomNav} />;
     } else {
       return (
-        <div className="px-5 py-8 max-h-[100vh] overflow-hidden bg-grey-100 text-black text-center">
-          <div className="pb-8 text-black">
-            <h1>
-              Welcome Home:{" "}
-              <span className="font-semibold">{this.state.currentUser}</span>{" "}
-            </h1>
+        <div className="py-8 pt-0 max-h-[100vh] overflow-hidden bg-grey-100 text-black text-center">
+          <div className="p-4 bg-[#1f3460] text-white">
+            Welcome Home:{" "}
+            <span className="font-semibold">{this.state.currentUser}</span>
           </div>
-          {/* Divine to 2 section */}
           <div className="flex flex-row w-full">
-            {/* One to create room has width = 25% */}
-            <div className="w-1/2">
-              <div
-                className="space-y-4 p-8 rounded-lg bg-white"
-              >
-                <div
-                  className="flex flex-row justify-center items-center"
-                >
-                  <div>
-                    <input
-                      id="messageText"
-                      className="px-5 py-5 border-2 border-black rounded-md w-full"
-                      value={this.state.new_room_name}
-                      onChange={this.onInputChange}
-                      onKeyUp={(e) => this.onEnterHandler(e)}
-                      autoComplete="off"
-                    />
-                  </div>
-                </div>
-                <div>
-                    <button
-                      className="border-2 border-secondary-light bg-blue-400 rounded-full px-4 py-2 text-medium text-secondary"
-                      onClick={(e) => this.startNewRoomClick(e)}
-                    >
-                      Create Room
-                    </button>
-                </div>
-              </div>
-            </div>
-
-            {/* One to display rooms has width = 75% */}
-  <div className="w-1/3">
+            <div className="w-1/3 max-h-[100vh] py-8 border-l border-r bg-gray-900 border-gray-700">
               <div>
-                <h1 className="py-1">Existed Rooms</h1>
-                <div className="justify-center h-screen overflow-y-scroll"
-                >
+                <h2 className="px-5 text-lg font-medium text-white">
+                  Existed Room
+                </h2>
+                <div className="h-[calc(100vh-117px)] overflow-y-auto">
                   {rooms.map((room, index) => {
-                    if (user.favorites.includes(room.room_name)) {
-                      return (
-                        <div className="border-2 border-secondary-light bg-blue-400 rounded-md px-4 py-2 text-medium text-secondary">
-                          <div
-                            className="border-2 border-secondary-light bg-blue-400 rounded-md px-4 py-2 text-medium text-secondary"
-                            onClick={(e) => this.handleRoomClick(e)}
-                            id={room.room_name}
-                            key={index}
-                          >
-                            <div className="flex items-center">
+                    const isFavorite = user.favorites.includes(room.room_name);
+                    return (
+                      <div
+                        className="border border-slate-500 rounded-sm text-gray-200 flex items-center w-full px-4 py-4 transition-colors duration-200 hover:bg-gray-800 gap-x-2 focus:outline-none"
+                        key={index}
+                      >
+                        <div
+                          className="py-4 text-sm font-medium capitalize text-white"
+                          onClick={(e) => this.handleRoomClick(e)}
+                          id={room.room_name}
+                        >
+                          {isFavorite && (
+                            <div className="flex items-center text-sm font-medium capitalize text-white">
                               <FavoriteIcon />
                               <p className="ml-2">{room.room_name}</p>
                             </div>
+                          )}
+                          {!isFavorite && <p>{room.room_name}</p>}
+                          {isFavorite && (
                             <button
                               className="text-secondary"
                               onClick={(e) =>
@@ -253,31 +226,16 @@ class Home extends React.Component {
                             >
                               X
                             </button>
-                          </div>
+                          )}
                         </div>
-                      );
-                    } else {
-                      return (
-                        <div className="border-2 border-secondary-light bg-blue-400 rounded-full px-4 py-2 text-medium text-secondary">
-                          <div
-                            className="flex flex-col order-2 border-secondary-light rounded-md bg-blue px-4 py-2"
-                            onClick={(e) => this.handleRoomClick(e)}
-                            id={room.room_name}
-                            key={index}
-                          >
-                            {room.room_name}
-                          </div>
-                        </div>
-                      );
-                    }
+                      </div>
+                    );
                   })}
                 </div>
               </div>
             </div>
-
-            {/* Creat */}
-            <div className="w-1/2 ">
-              <div className="space-y-4 p-8 rounded-lg bg-white ">
+            <div className="w-2/3">
+              <div className="space-y-4 p-8 rounded-lg bg-white">
                 <div className="flex flex-row justify-center items-center">
                   <div>
                     <input
@@ -300,8 +258,6 @@ class Home extends React.Component {
                 </div>
               </div>
             </div>
-
-            {/* One to display rooms has width = 75% */}
           </div>
         </div>
       );
